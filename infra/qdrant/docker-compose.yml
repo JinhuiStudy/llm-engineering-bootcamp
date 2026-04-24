@@ -1,0 +1,17 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ai-study-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # REST + Dashboard
+      - "6334:6334"   # gRPC
+    volumes:
+      - ./storage:/qdrant/storage
+    environment:
+      QDRANT__TELEMETRY_DISABLED: "true"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo > /dev/tcp/localhost/6333"]
+      interval: 10s
+      timeout: 3s
+      retries: 5

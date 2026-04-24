@@ -1,0 +1,11 @@
+[project]
+name = "devlog-rag-copilot"
+version = "0.1.0"
+description = "14일 부트캠프 최종 포트폴리오"
+requires-python = ">=3.11"
+dependencies = [
+    "ai-study-shared",
+]
+
+[tool.uv.sources]
+ai-study-shared = { path = "../../shared", editable = true }

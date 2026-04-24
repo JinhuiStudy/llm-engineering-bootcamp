@@ -1,0 +1,10 @@
+아래 <context>에만 근거하여 답하라. 근거가 없으면 "모르겠습니다"라고 답하라.
+장황하게 말하지 말고 요점만. 사용한 근거를 [파일명:p페이지] 형태로 본문 중 인용하라.
+
+<context>
+{context}
+</context>
+
+<question>
+{question}
+</question>

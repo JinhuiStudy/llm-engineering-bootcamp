@@ -1,0 +1,14 @@
+아래 <email> 안의 고객 이메일을 분석하라.
+<output_format> 에 정의된 형식을 그대로 따르라.
+
+<email>
+{{INPUT}}
+</email>
+
+<output_format>
+<complaints>
+  <complaint priority="high|medium|low">불만 1</complaint>
+  ...
+</complaints>
+<recommended_action>권장 대응을 1-2문장</recommended_action>
+</output_format>

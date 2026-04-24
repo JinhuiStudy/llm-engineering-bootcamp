@@ -1,0 +1,10 @@
+[project]
+name = "day01-chatbot-cli"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "ai-study-shared",
+]
+
+[tool.uv.sources]
+ai-study-shared = { path = "../../shared", editable = true }

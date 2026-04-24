@@ -5,7 +5,7 @@
 
 ## Tier S — 매일 10번 이상 마주침
 - **Token** — 모델이 처리하는 최소 단위. 글자나 단어 아님. "안녕하세요" ≈ 4-5 tokens.
-- **Context window** — 한 번에 모델이 볼 수 있는 총 토큰 수 (입력+출력). Claude Sonnet 200k, Gemini 1M+.
+- **Context window** — 한 번에 모델이 볼 수 있는 총 토큰 수 (입력+출력). **Claude 4.x는 1M GA (2026-04)**, Gemini 1M+.
 - **Prompt** — 모델에 보내는 입력 전체 (system + messages).
 - **System prompt** — 모델의 역할/규칙을 지시하는 상위 프롬프트. Anthropic은 top-level, OpenAI/Gemini는 messages 배열 안.
 - **Temperature** — 출력 랜덤성 조절 (0=결정적, 1+=창발적). Structured output은 0 근처.
@@ -100,7 +100,7 @@
 
 ## Tier C — MCP / 프로토콜
 - **MCP (Model Context Protocol)** — AI 앱과 외부 시스템을 잇는 오픈 표준.
-- **Tools / Resources / Prompts** — MCP의 3가지 primitives.
+- **Tools / Resources / Prompts / Sampling** — MCP의 **4가지 primitives**.
 - **Transport (stdio / SSE / HTTP)** — 통신 방식.
 - **Client / Server / Host** — 각각 LLM 앱 / tool 노출 측 / 앱을 돌리는 플랫폼 (Claude Desktop, Cursor).
 - **Sampling** — 서버가 호스트의 LLM을 역호출.

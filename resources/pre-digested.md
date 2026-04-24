@@ -129,7 +129,7 @@ print(r.stop_reason)  # end_turn | max_tokens | tool_use | stop_sequence
 ### Gemini (google-genai, 2026 신 SDK)
 ```python
 from google import genai
-client = genai.Client()  # GEMINI_API_KEY env
+client = genai.Client()  # GOOGLE_API_KEY env (권장. GEMINI_API_KEY도 Google SDK가 인식)
 
 r = client.models.generate_content(
     model="gemini-3-flash-preview",  # 2026-04 최신

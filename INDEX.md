@@ -15,13 +15,13 @@
 
 ## 🗂 주요 디렉토리 링크
 
-- **[`curriculum/`](curriculum/)** — 일자별 공부 플랜 (14개)
-- **[`resources/links-classified.md`](resources/links-classified.md)** — 모든 자료 분류 + 요약 (단일 진실 소스)
-- **[`projects/`](projects/)** — 일자별 실습 스켈레톤 (13개) + 최종 포트폴리오
-- **[`shared/`](shared/)** — 공통 Python 패키지 (`ai_study.*`)
-- **[`infra/`](infra/)** — Qdrant + Langfuse Docker Compose
-- **[`notes/`](notes/)** — 개인 노트 (keywords, concepts, daily-log)
-- **[`cheatsheets/`](cheatsheets/)** — 빠른 참조 (prompt, RAG, eval, API 비교)
+- **[`curriculum/`](curriculum/)** — 일자별 공부 플랜 (14개 + day00-prep + troubleshooting + extras)
+- **[`resources/`](resources/)** — `pre-digested.md` (v3.1 공식 코드) / `links-classified.md` / `00-top20-priority.md` / `must-read` / `optional` / `later` / `skip`
+- **[`projects/`](projects/)** — 일자별 실습 스타터 (13개) + `final-portfolio`
+- **[`shared/`](shared/)** — 공통 Python 패키지 (`ai_study.*` — config/llm/embeddings/vectors/tokens/prompts/langfuse_client/logging/retry)
+- **[`infra/`](infra/)** — Qdrant + Langfuse Docker Compose + 튜닝 가이드
+- **[`notes/`](notes/)** — keywords / concepts / **decisions** / daily-log
+- **[`cheatsheets/`](cheatsheets/)** — prompt-patterns / rag-patterns / eval-metrics / api-compare + **agent-patterns / production-patterns / mcp-cheatsheet** (v2 신규)
 
 ## 📅 14일 일람
 
@@ -65,32 +65,65 @@
 | **⭐ Pre-Digested 문서** | [`resources/pre-digested.md`](resources/pre-digested.md) (신규 v3.1 — 공식 문서 직접 fetch해서 뽑은 복붙 코드 + 2026 최신) |
 | 큰 결정 기록 | [`notes/decisions.md`](notes/decisions.md) |
 
-## 🔧 자주 쓰는 명령
+## 🔧 자주 쓰는 명령 (v3)
 
 ```bash
-make help              # 전체 커맨드
+make help              # 15+ 타겟
 make setup             # 최초 1회
-make verify            # API 연결 점검
+make verify            # 3사 API 점검
+make status            # 현재 상태 (.env/Python/uv/Docker/Ollama/MCP config)
+
+# 인프라
 make qdrant-up         # Day 6+
 make langfuse-up       # Day 12+
-make infra-up          # 둘 다
-make status            # 현재 상태 요약
+make phoenix-up        # Day 12 선택
+make infra-up / infra-down
+
+# Smoke + 가격
+make smoke-llm         # 3사 chat smoke
+make smoke-embed       # OpenAI embedding
+make smoke-qdrant      # Qdrant 연결
+make pricing           # 2026-04 모델 가격표
+
+# Day 타겟
+make day0 / day1 / ... / day14   # 각 Day 커리큘럼 head 열기
+
+# Day 별 도구
+make ollama-pull       # Day 13 모델 (qwen3:8b + llama3.3)
+make mcp-inspector     # Day 11 MCP 디버깅
+
+# Eval
+make eval-mini         # Day 9 20-sample Ragas
+make eval-full         # 전체
+
+# 품질
+make fmt / lint / typecheck / test
+make clean-data / clean-docker
 ```
 
-## 🎯 최종 산출물
+## 🎯 최종 산출물 (v3 ULTRA)
 
-**Devlog RAG Copilot** — Day 14까지 나올 것:
-- 공개 GitHub 레포 1개
-- Multi-provider RAG + LangGraph Agent + MCP server + Langfuse 관측 + Ragas eval 통과
-- README에 아키텍처 다이어그램 + 데모 gif + 평가 점수
+**"Devlog RAG Copilot ULTRA"** — Day 14까지:
+- 공개 GitHub 레포 (MIT) + **Modal public URL**
+- **Vision RAG** (표/차트/스캔 PDF) + **Voice input** (Whisper)
+- **Multi-agent** (Supervisor + Researcher/Writer/Critic)
+- **Fine-tuned LoRA** (Qwen3-8B 본인 도메인)
+- **Guardrails 3겹** (Prompt-Guard + Guardrails AI + NeMo)
+- **MCP server** + Langfuse trace + **Ragas CI gate (≥ 0.85)**
+- Multi-provider env switch (openai / anthropic / ollama / runpod / finetuned)
 
-## 📌 마인드셋
+## 📌 마인드셋 (v3 강화 — 10 원칙)
 
 1. **공식 문서 우선.** 블로그 구글링은 2순위.
 2. **튜토리얼은 한 번만.** 두 번째는 반드시 변형.
 3. **숫자로 말한다.** Eval 없는 개선은 미신.
-4. **실패를 로그한다.** 안 된 이유, 뭘 바꿨더니 됐는지 매일 기록.
-5. **완벽 대신 완료.** 내 코드가 완벽하지 않아도 14일 안에 돌아가는 게 먼저.
+4. **실패를 로그한다.** 안 된 이유 + 뭘 바꿨더니 됐는지 매일.
+5. **완벽 대신 완료.** 돌아가는 게 우선.
+6. **Prompt caching + Batch API** — 비용 가드레일
+7. **Fine-tuning은 Ragas 개선 증명 필수** — "돌려봄"으로 끝내지 마
+8. **GPU 예산 $25 상한** — Day 13 초과 시 실험 중단
+9. **논문 Figure 수준** — 본문 통독 금지. Claude 요약 + Figure
+10. **토/일 풀가동** — 주말 쉬기 금지
 
 ## 🔥 v3.1 Pre-Digested 추가 (최신)
 

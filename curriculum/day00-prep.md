@@ -99,7 +99,7 @@ make qdrant-down
 
 # Langfuse는 Day 12에 (디스크/RAM 꽤 씀). 이미지만 미리 pull해두고 싶으면:
 docker pull langfuse/langfuse:latest
-docker pull clickhouse/clickhouse-server:24.10-alpine
+docker pull clickhouse/clickhouse-server:24.3  # infra/langfuse/docker-compose.yml과 일치
 ```
 
 ### 7️⃣ IDE / 에디터 (5분)
@@ -157,10 +157,10 @@ make status
 
 Google Calendar / Apple Calendar에 다음 블록 반복 설정:
 
-- **평일**: 08:30-21:30 (점심 12:30-13:30)
-- **토요일**: 오전 3-4h 주간 몰입
-- **일요일**: 오전 2h 복습 + 오후 쉬기
-- **매일 21:30 이후**: 수면 우선 — 공부 차단
+- **평일**: 07:30-22:30 (v3 ULTRA 12h 블록 — `schedule.md` 참조)
+- **토요일**: **풀가동 12h** (평일과 동일)
+- **일요일**: 12h + 오후 2h 버퍼
+- **매일 22:30 이후**: 수면 우선 — 공부 차단. 수면 8h 보장
 
 가족/연인/친구한테 "2주 연락 제한" 공유. 응급 제외.
 
@@ -195,15 +195,19 @@ Google Calendar / Apple Calendar에 다음 블록 반복 설정:
 
 👉 **이 문서 하나 훑으면 Day 1-14 내내 링크 열 필요 50% 감소**.
 
-## 예산 요약
+## 예산 요약 (v3 ULTRA 기준 — Fine-tuning GPU 포함)
 
-| 항목 | 예상 |
-|---|---|
-| OpenAI | $10-15 |
-| Anthropic | $10-15 |
-| Gemini | $0 |
-| RunPod (Day 13) | $5-10 |
-| **합계** | **$25-40** |
+| 항목 | 최저 | 현실 |
+|---|---|---|
+| OpenAI (Structured/Eval) | $8 | $25 |
+| Anthropic (Tool/Caching) | $8 | $20 |
+| Gemini | $0 | $5 |
+| RunPod Serverless (Day 11-13) | $5 | $10 |
+| **RunPod H100 Fine-tuning (Day 13)** | $15 | $25 |
+| Modal / Fly.io (Day 12) | $0 | $5 (free tier) |
+| **합계** | **$36** | **$90** |
+
+> v2(10h × 14) 모드 예산은 $25-40. v3 ULTRA는 Fine-tuning GPU 추가로 $20-50 더.
 
 카페인/간식 / 전기세 별도.
 

@@ -78,7 +78,7 @@ make qdrant-down
 
 # Langfuse는 Day 12에. 이미지만 pull:
 docker pull langfuse/langfuse:latest
-docker pull clickhouse/clickhouse-server:24.10-alpine
+docker pull clickhouse/clickhouse-server:24.3  # infra/langfuse/docker-compose.yml과 일치
 docker pull postgres:16-alpine
 ```
 

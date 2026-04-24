@@ -17,7 +17,7 @@
 ```
 day01-chatbot-cli/
 ├── pyproject.toml                # uv 프로젝트
-├── .env                          # OPENAI_API_KEY / ANTHROPIC_API_KEY / GEMINI_API_KEY
+├── .env                          # OPENAI_API_KEY / ANTHROPIC_API_KEY / GOOGLE_API_KEY
 ├── chat.py                       # CLI 엔트리 — argparse로 모드 스위치
 ├── tokens.py                     # Task 1: 3사 토큰 비교 + 비용 추정
 ├── temperature_demo.py           # Task 2: sampling 그리드 + 다양성 점수

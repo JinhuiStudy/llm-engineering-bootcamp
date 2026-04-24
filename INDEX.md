@@ -60,6 +60,8 @@
 | 시간 블록 계획 | [`curriculum/schedule.md`](curriculum/schedule.md) |
 | 자가진단 | [`curriculum/self-check.md`](curriculum/self-check.md) |
 | 뒤처졌을 때 | [`curriculum/recovery-playbook.md`](curriculum/recovery-playbook.md) |
+| **Troubleshooting / FAQ** | [`curriculum/troubleshooting.md`](curriculum/troubleshooting.md) (신규 v2) |
+| **Day 0 프리컬** | [`curriculum/day00-prep.md`](curriculum/day00-prep.md) (신규 v2) |
 | 큰 결정 기록 | [`notes/decisions.md`](notes/decisions.md) |
 
 ## 🔧 자주 쓰는 명령

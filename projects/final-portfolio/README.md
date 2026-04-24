@@ -1,8 +1,9 @@
-# Day 14 — Final Portfolio: Devlog RAG Copilot
+# Day 14 — Final Portfolio: Devlog RAG Copilot ULTRA (v3)
 
 > **연결**: [`curriculum/week2-day14-final-portfolio.md`](../../curriculum/week2-day14-final-portfolio.md) · [`ARCHITECTURE.md`](ARCHITECTURE.md)
-> **의존성**: Day 1-13 재활용 가능한 모든 코드
-> **목표**: GitHub 공개 품질 + MIT + docker-compose 원클릭 + CI + Ragas threshold 통과
+> **의존성**: Day 1-13 재활용 가능한 모든 코드 + Day 13 fine-tuned LoRA
+> **목표**: GitHub 공개 품질 + MIT + docker-compose + **Modal public URL** + CI + Ragas ≥ 0.85
+> **시간**: v3 ULTRA 14h (v2는 10h)
 
 ## 🎯 공개 기준 (OK/NG 판정)
 
@@ -88,18 +89,17 @@ final-portfolio/
     └── retrospective.md            # 14일 회고
 ```
 
-## ⏱ 14일차 10h 타임박스
+## ⏱ 14일차 14h 타임박스 (v3 ULTRA — 극한 모드)
 
 | 시간 | 작업 |
 |---|---|
-| 08:30-09:30 | Day 1-13 재활용 선별 (grep으로 함수/클래스 목록) |
-| 09:30-11:30 | 스켈레톤 + FastAPI + docker-compose |
-| 12:30-14:30 | LangGraph + RAG 포팅 |
-| 14:30-16:00 | Langfuse + MCP + multi-provider |
-| 16:00-17:00 | Golden 50+ + Ragas 통과 |
-| 18:00-19:00 | README + architecture diagram + demo gif |
-| 20:00-21:00 | GitHub Actions + push + 공개 |
-| 21:00-21:30 | 회고 + license + repo topics |
+| 07:00-09:00 | Advanced Topics Rapid Fire (MoE/Speculative/FlashAttention/Distillation/분산 + 논문 5편) |
+| 09:00-12:00 | 스켈레톤 + Day 1-13 재활용 선별 + FastAPI + docker-compose |
+| 12:45-16:00 | Core 통합 (LangGraph + RAG + MCP + Langfuse) |
+| 16:00-18:00 | Multi-modal (Vision/Voice) + Fine-tuned LoRA 연결 + Modal 배포 |
+| 18:30-20:30 | Eval + Guardrails 3겹 마무리 |
+| 21:00-23:00 | README + architecture diagram + demo gif + GitHub push |
+| 23:00-00:00 | 회고 (retrospective.md) + commit final |
 
 ## ✅ 필수 기능 매트릭스
 
@@ -239,20 +239,32 @@ MIT
 7. **README가 코드 blob** — 3-5분에 읽히는 구조로 정리
 8. **ARCHITECTURE.md == 코드 복붙** — 다이어그램 + why + trade-off
 
-## 🎁 Stretch (V2 후속)
+## 🎁 Stretch (v3 ULTRA에서 이미 포함된 것들 — stretch 아님!)
+
+v3 ULTRA에서는 다음이 **필수 포함**:
+- ✅ Vision RAG (Day 7) / Voice input (Day 10)
+- ✅ Multi-agent Supervisor (Day 9)
+- ✅ Fine-tuned LoRA (Day 13)
+- ✅ Guardrails 3겹 (Day 3 + Day 11: Prompt-Guard + Guardrails AI + NeMo)
+- ✅ Modal / Fly.io deploy (Day 12)
+- ✅ Batch API (Day 11)
+- ✅ OWASP LLM Top 10 (Day 3)
+
+## 🎁 진짜 Stretch (v3 끝난 후)
 
 - Docker multi-arch (amd64 + arm64)
-- Fly.io / Modal deploy
 - Semantic cache (Redis + embedding)
-- Vision RAG
-- Voice (Whisper)
-- Guardrails (LlamaFirewall / Prompt-Guard)
+- Realtime API 양방향 voice
+- LlamaFirewall 깊이
+- K8s 실제 배포 (v3는 manifest만)
+- Multi-user deployment + auth
 
-## 🔗 후속
+## 🔗 후속 (14일 이후 심화)
 
 [`curriculum/extras.md`](../../curriculum/extras.md):
-- OWASP LLM Top 10
-- Batch API (50%)
-- Fine-tuning (LoRA/QLoRA/DPO)
-- Multi-agent / CrewAI
-- pgvector / Weaviate / Pinecone 교체
+- Fine-tuning 심화 (Constitutional AI / KTO / ORPO / Full SFT / DPO 반복)
+- Advanced Agent (CrewAI / Agent Skills / Computer Use)
+- Advanced RAG (CRAG / Self-RAG / GraphRAG)
+- pgvector / Milvus / Weaviate 교체
+- 논문 본문 통독 (25편)
+- 실무 진입 (취업/창업/연구)

@@ -50,7 +50,7 @@
 
 ```
 day01-chatbot-cli/
-├── .env                    # OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY
+├── .env                    # OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY
 ├── chat.py                 # argparse로 --provider / --stream / --compare / --cache
 ├── providers/
 │   ├── __init__.py

@@ -1,115 +1,158 @@
-# 14일 이후 확장 트랙 (Post-Bootcamp)
+# 14일 이후 심화 트랙 (Post-Bootcamp, v3 Updated)
 
-2주 부트캠프에서 의도적으로 뺀 주제. 실무에 들어가기 전에 반드시 건드려야 할 것과, 특정 프로젝트에서만 필요한 것들.
+> **v3 ULTRA에서 대부분의 "extras"는 이미 Day 1-14에 내포**되었습니다.
+> 이 문서는 **더 깊이 파고들** 주제 + **실무 투입 후 연장**.
+>
+> 참조: [`resources/later.md`](../resources/later.md)도 중복 — 이 문서가 curriculum 관점, later.md가 resources 관점.
 
-## 우선순위 A — 2주 끝나자마자 해야 함
+## 📋 v3 ULTRA에 이미 포함된 주제 (중복 확인)
 
-### A1. Security / Prompt Injection 방어
-- [Anthropic — Jailbreaking & prompt injections](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks)
-- [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- 실습: Day 14 포트폴리오에 system prompt 누출 방어, tool allow-list, 입력 sanitize 추가
-- 키워드: prompt injection (direct/indirect), jailbreak, data exfiltration, tool abuse, sandboxing
+| 영역 | Day | 위치 |
+|---|---|---|
+| OWASP LLM Top 10 + Prompt-Guard 2 | Day 3 | Prompt Engineering |
+| Vision RAG | Day 7 | 기본 RAG 섹션 |
+| RAPTOR / ColBERT / Contextual Retrieval | Day 8 | 고급 RAG + 논문 |
+| Multi-agent (LangGraph Supervisor / CrewAI / Swarm) | Day 9 | Eval + Multi-agent |
+| Voice input (Whisper / Realtime) | Day 10 | LangGraph Agent |
+| Batch API 3사 + Guardrails 3겹 (NeMo / LlamaFirewall) | Day 11 | MCP 섹션 |
+| Deployment (Modal / Fly.io / Docker / K8s) | Day 12 | Observability 섹션 |
+| Fine-tuning (LoRA/QLoRA/DPO Unsloth) | Day 13 | Local LLM + Fine-tuning |
+| MoE / Speculative / FlashAttention / Distillation / 분산 | Day 14 | Advanced Topics Rapid Fire |
+| 논문 25편 Figure 수준 | Day 1-14 전반 | — |
 
-### A2. Guardrails
-- [Guardrails AI](https://www.guardrailsai.com/docs)
-- [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
-- [LlamaFirewall / Llama-Prompt-Guard](https://huggingface.co/meta-llama/Prompt-Guard-86M)
-- 실습: output validation 파이프라인 (PII 탐지, 해로운 컨텐츠 필터)
+따라서 이 문서의 주제는 **"더 깊게"**.
 
-### A3. Deployment / Serving
-- [FastAPI + SSE streaming](https://fastapi.tiangolo.com/)
-- [Modal](https://modal.com/docs), [Fly.io](https://fly.io/docs/)
-- [Docker multi-stage builds for Python]
-- 실습: Day 14 포트폴리오를 Fly.io 또는 Modal에 배포
+---
 
-### A4. Batch API (비용 절감 50%)
-- [OpenAI Batch API](https://platform.openai.com/docs/guides/batch)
-- [Anthropic Message Batches](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing)
-- [Gemini Batch](https://ai.google.dev/gemini-api/docs/batch-mode)
-- 실습: 대량 classification/extraction task를 batch로 돌려 비용 비교
+## 🎯 Day 15-20 (1주 심화)
 
-## 우선순위 B — 특정 니즈 생기면
+### 1. 배포된 포트폴리오 유지보수 (3-4일)
+- CI/CD 강화: nightly full Ragas eval → Langfuse dashboard에 붙이기
+- Semantic cache 추가 (Redis + embedding) — 같은 의미 쿼리는 LLM 호출 없이 답
+- User auth + session 추가 (기본 JWT, 선택)
+- Multi-user concurrency — FastAPI async + Qdrant에 user_id filter
+- Modal autoscale 튜닝 + keep_warm 비용 실측
 
-### B1. Fine-tuning (section 17의 자료들)
-- [OpenAI Fine-tuning](https://platform.openai.com/docs/guides/fine-tuning)
-- [HF PEFT](https://huggingface.co/docs/peft/index) / [repo](https://github.com/huggingface/peft)
-- [HF TRL](https://huggingface.co/docs/trl/index) / [repo](https://github.com/huggingface/trl)
-- [Axolotl](https://github.com/axolotl-ai-cloud/axolotl)
-- [Unsloth docs](https://docs.unsloth.ai/) / [repo](https://github.com/unslothai/unsloth)
-- 언제 하는가: 프롬프트 엔지니어링으로 품질 한계에 부딪혔을 때. RAG로도 못 막는 특정 톤/포맷/도메인 지식이 필요할 때.
-- 순서: LoRA → QLoRA (Unsloth) → 필요하면 full fine-tune → RLHF/DPO
-- 비용: RunPod H100 1시간 ~$3-5. 7B QLoRA 1 epoch ≈ 몇 시간.
+### 2. Fine-tune 반복 개선 (2-3일)
+- Day 13 base LoRA → **DPO 5 iteration** (preference 수집 → 훈련 → 평가 반복)
+- Ragas 개선 측정: 5% 이상 올리려면 데이터 quality > quantity
+- HF Hub에 모델 push + README 작성 (공개 포트폴리오 확장)
+- (선택) **Constitutional AI 스타일** self-refinement
 
-### B2. Multi-modal
-- [OpenAI Vision](https://platform.openai.com/docs/guides/vision)
-- [Anthropic Vision](https://docs.anthropic.com/en/docs/build-with-claude/vision)
-- [Gemini multimodal](https://ai.google.dev/gemini-api/docs/vision)
-- [Google multimodal RAG codelab](https://codelabs.developers.google.com/multimodal-rag-gemini)
-- [GCP multimodal RAG notebook](https://github.com/GoogleCloudPlatform/generative-ai/blob/main/gemini/use-cases/retrieval-augmented-generation/intro_multimodal_rag.ipynb)
-- 실습: PDF 안의 표/차트까지 인덱싱하는 RAG
+### 3. Observability 프로덕션 레벨
+- Langfuse → Clickhouse TTL 설정 (디스크 폭발 방지)
+- Prometheus + Grafana로 latency/cost metric 대시보드
+- PagerDuty/Slack 알람 (latency p95 > 10s, error rate > 5%)
+- Load test (Locust로 100 concurrent user)
 
-### B3. Semantic Cache / Response Cache
-- [GPTCache](https://github.com/zilliztech/GPTCache)
-- Redis + embedding 직접 구현
-- 실습: 동일 의미 쿼리 hit 시 LLM 호출 없이 즉답
+---
 
-### B4. Advanced Agents
-- [CrewAI docs](https://docs.crewai.com/) / [repo](https://github.com/crewAIInc/crewAI)
-- [Pydantic AI](https://pydantic.dev/docs/ai/overview/) / [repo](https://github.com/pydantic/pydantic-ai)
-- Multi-agent (supervisor / hierarchical / swarm)
-- Human-in-the-loop patterns (LangGraph interrupts)
+## 🎯 Day 21-60 (1-2개월)
 
-### B5. Vector DB 비교 / 교체
-- [Weaviate](https://docs.weaviate.io/weaviate) — 그래프 + 벡터 하이브리드
-- [Pinecone](https://docs.pinecone.io/) — 완전 관리형
-- [Chroma](https://docs.trychroma.com/) — 단순 임베디드
-- [FAISS](https://faiss.ai/) / [repo](https://github.com/facebookresearch/faiss) — 라이브러리 수준
-- [pgvector](https://github.com/pgvector/pgvector) / [Supabase AI](https://supabase.com/docs/guides/ai) — Postgres 통합
-- 언제 교체: 규모 (100M+ vectors), 관리 부담, 기존 Postgres 있음 등
+### A. Fine-tune Depth (선택)
+v3 Day 13이 entry point. 심화:
+- **Full SFT** (not LoRA) — 7B 전체 weight. H100 2개 필요.
+- **Constitutional AI** ([Bai 2022](https://arxiv.org/abs/2212.08073)) — self-critique 기반 alignment
+- **KTO / ORPO** — DPO 경쟁. 2024-2026 신 preference 학습
+- **Reward model** 학습 → RLHF full pipeline (어려움, 비용 큼)
+- **Multi-turn SFT** — 긴 대화 데이터로 tuning
+- **Domain embedding 재훈련** — 본인 문서로 embedding 모델도 fine-tune
+  - [sentence-transformers — Training Overview](https://www.sbert.net/examples/training/sts/README.html)
 
-### B6. 논문 정독 (section 18)
-실무에서는 요약만 알아도 되지만 리더 역할 하려면:
-- [Attention Is All You Need](https://arxiv.org/abs/1706.03762) ([PDF](https://arxiv.org/pdf/1706.03762))
-- [RAG (Lewis et al. 2020)](https://arxiv.org/abs/2005.11401) ([NeurIPS PDF](https://proceedings.neurips.cc/paper/2020/file/6b493230205f780e1bc26945df7481e5-Paper.pdf))
-- [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903) ([PDF](https://arxiv.org/pdf/2201.11903))
-- [ReAct](https://arxiv.org/abs/2210.03629) ([PDF](https://arxiv.org/pdf/2210.03629)) ([Google blog](https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/))
-- 방법: Claude한테 요약 시키고 Figure + Abstract + Conclusion만. 본문은 궁금한 섹션만.
+### B. 고급 Agent
+v3 Day 9-10 확장:
+- **Computer Use** (Anthropic) — screenshot + 마우스/키보드 제어
+- **Agent Skills** (PowerPoint/Excel/Word/PDF) — Anthropic 공식
+- **Swarm with handoff** — OpenAI Swarm의 진짜 사용
+- **LangGraph Studio** — visual debugger
+- **Graph RAG** — neo4j + entity linking
+- [CrewAI deeper](https://docs.crewai.com/) — 역할 기반 복잡 workflow
 
-## 우선순위 C — 언젠가 필요할 수도
+### C. 고급 RAG
+v3 Day 8 확장:
+- **CRAG (Corrective RAG)** — web fallback 구현
+- **Self-RAG** — 모델이 retrieval 필요 자체 판단
+- **GraphRAG (Microsoft)** — Knowledge Graph + community summarization
+- **LlamaIndex Ingestion Pipeline** — 복잡 ETL
+- Embedding 4-bit quantization (binary 저장, 32x 압축)
+- **Matryoshka + quantization** 조합으로 비용 극소화
 
-- RLHF / DPO / PPO (alignment)
-- Mixture of Experts (MoE) — GPT-4, Mixtral 내부
-- Speculative decoding (inference 가속)
-- Embedding quantization (binary, int8)
-- KV cache management
-- MoCoLM, long-context (1M+ tokens) 전략
-- Distillation (teacher → student)
+### D. Multi-modal Depth
+v3 Day 7 확장:
+- **Image generation** 통합 — DALL-E / Imagen / Flux
+- **Video 이해** — Gemini Video
+- **Audio full-duplex** — OpenAI Realtime API + WebRTC
+- **3D** — BlenderMCP
+- **Document AI** — 스캔 PDF, 테이블, diagram 인식
 
-## 확장 자료 (section 19 - YouTube 전체)
+### E. Security / Production Hardening
+v3 Day 3/11 확장:
+- **OWASP LLM Top 10 v2.0** 전 항목 대응 구현
+- **Guardrails AI validator** 15개+ 커스텀
+- **LlamaFirewall** 전체 스택 (input/output/tool_use)
+- **Data poisoning 방어** — training set / vector DB 무결성
+- **Red team 실습** — 자체 앱 공격 → 방어
+- **Audit log + GDPR** 준수
 
-- [LLM Zoomcamp 전체 playlist](https://www.youtube.com/playlist?list=PL3MmuxUbc_hIoBpuc900htYF4uhEAbaT-)
-- [LLM Zoomcamp intro video](https://www.youtube.com/watch?v=FgnelhEJFj0)
-- [RAG From Scratch playlist](https://www.youtube.com/playlist?list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x)
-- [RAG From Scratch intro](https://www.youtube.com/watch?v=sVcwVQRHIc8)
-- [DeepLearning.AI YouTube](https://www.youtube.com/@Deeplearningai) + [Short Courses](https://www.deeplearning.ai/short-courses/)
-- [LangChain YouTube](https://www.youtube.com/@LangChain) + [Academy](https://academy.langchain.com/)
-- [Hugging Face YouTube](https://www.youtube.com/@HuggingFace) + [Learn](https://huggingface.co/learn)
-- [Google Developers YouTube](https://www.youtube.com/@GoogleDevelopers)
-- [OpenAI Devs YouTube](https://www.youtube.com/@OpenAIDevs)
-- [Anthropic YouTube](https://www.youtube.com/@anthropic-ai)
+### F. 인프라 / 대규모
+- **vLLM 상세 튜닝** — speculative decoding / CUDA graphs / tensor parallel
+- **vLLM on Kubernetes** (KServe)
+- **Multi-region deployment** — Cloudflare Workers AI
+- **Edge inference** — Ollama on Raspberry Pi 5
+- **Dedicated GPU** vs Serverless 비용 분석 (월 트래픽 기반)
 
-## 한국어 보조 검색 키워드 (section 20)
-막힐 때만 사용. 공식 문서가 1순위.
+### G. 연구 / 논문
+**Day 14에 Figure만 본** 25편을 **본문까지**:
+- 각 논문 1주에 1편, 6개월에 25편
+- 실제 코드 reproduce 2-3편 (예: LoRA, FlashAttention)
+- 자체 ablation 1회 (예: RAG 기법 조합 비교)
+- (선택) arXiv에 blog-post 스타일 정리 글
 
-- LLM RAG 한국어 튜토리얼
-- LangChain RAG 한국어
-- Qdrant RAG 한국어
-- vLLM 한국어 튜토리얼
-- Ollama 로컬 LLM 한국어
-- LangGraph 한국어
-- LLM evaluation 한국어
-- RAGAS 한국어
-- Langfuse 한국어
+---
 
-한국어 유일 공식 자료:
+## 🎯 Day 60-180 (3-6개월)
+
+### 실무 진입 옵션
+
+**Option 1: 취업 (LLM Engineer)**
+- 포트폴리오 완성도 ↑ — README / demo / 배포 URL 다 있음
+- LinkedIn 업데이트 + 프로젝트 detailed
+- 모의 인터뷰 — 시스템 디자인 (RAG 설계 / Agent 설계 / 비용 최적화)
+- 기술 블로그 1-2편 (본인 프로젝트 lessons learned)
+
+**Option 2: 창업 / 프로덕트**
+- 본인 도메인 특화 → MVP 런치
+- Growth: HN Show / Product Hunt / 트위터
+- 초기 유저 10명 → 피드백 → 반복
+
+**Option 3: 연구 / 오픈소스**
+- arxiv + 커뮤니티 기여 (LangChain / Unsloth / MCP servers / Ragas 등)
+- HF Hub에 본인 fine-tuned 모델 + 데이터셋
+- (선택) 석사 / PhD
+
+---
+
+## 📚 6개월 독서 목록 (선택)
+
+v3 Day 1-14의 Figure 레벨 이상 심화:
+
+### 책
+- [Designing ML Systems (Chip Huyen)](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/)
+- [Building ML Powered Applications (Emmanuel Ameisen)](https://www.oreilly.com/library/view/building-machine-learning/9781492045106/)
+- [AI Engineering (Chip Huyen, 2025)](https://www.oreilly.com/library/view/ai-engineering/9781098166298/) — LLM 특화
+
+### 지속 팔로우
+- [Simon Willison's blog](https://simonwillison.net/tags/llms/) — 매주
+- [Sebastian Raschka Magazine](https://magazine.sebastianraschka.com/) — 매달
+- [The Batch (deeplearning.ai)](https://www.deeplearning.ai/the-batch/) — 매주
+- [Eugene Yan](https://eugeneyan.com/writing/) — 실무 관점
+- [Lilian Weng](https://lilianweng.github.io/) — 고품질 survey
+
+---
+
+## 한국어 보조 (막힐 때만)
+
+- 한국어 검색 키워드: "LangGraph 한국어 튜토리얼" / "vLLM RunPod 한국어" / "Langfuse 설치 한국어" / "Unsloth LoRA 한국어"
 - [Google ML Crash Course LLM — 한국어 Transformers](https://developers.google.com/machine-learning/crash-course/llm/transformers?hl=ko)
+
+**공식 문서가 1순위**. 한국어 자료는 outdated 자주.

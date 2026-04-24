@@ -1,7 +1,7 @@
-# 🎯 AI Study Bootcamp — 마스터 INDEX
+# 🎯 AI Study Bootcamp — 마스터 INDEX (v3 ULTRA)
 
-2주 하드코어 LLM 엔지니어링 부트캠프.
-하루 10시간+ × 14일 = **~140시간**.
+2주 ULTRA 하드코어 LLM 엔지니어링 부트캠프.
+**하루 12-14시간 × 14일 = ~170시간**. 논문 25편 + Fine-tune + Deploy + Vision + Voice + Multi-agent 전부 내포.
 
 ## 🏁 처음 들어온 경우 이 순서로
 
@@ -91,11 +91,26 @@ make status            # 현재 상태 요약
 4. **실패를 로그한다.** 안 된 이유, 뭘 바꿨더니 됐는지 매일 기록.
 5. **완벽 대신 완료.** 내 코드가 완벽하지 않아도 14일 안에 돌아가는 게 먼저.
 
-## 🔥 v2 업그레이드 요약
+## 🚀 v3 ULTRA 업그레이드 요약 (최신)
+
+- **하루 10h → 12-14h**, 총 170h / 14일. 모든 extras 주제를 2주 안에 통합
+- **새 주제 7영역 추가**:
+  - Day 3: **OWASP LLM Top 10 + Llama Prompt-Guard 2**
+  - Day 7: **Vision / Multi-modal RAG** (표/차트/스캔 PDF)
+  - Day 9: **Multi-agent 3 프레임 비교** (LangGraph Supervisor / CrewAI / Swarm)
+  - Day 10: **Voice input** (Whisper + Realtime API)
+  - Day 11: **Batch API + Guardrails 3겹** (Prompt-Guard/NeMo/LlamaFirewall)
+  - Day 12: **Deployment** (Modal/Fly.io/Docker/K8s basics)
+  - Day 13: **Fine-tuning 전일** (LoRA/QLoRA/DPO with Unsloth on RunPod GPU)
+  - Day 14: **Advanced Topics Rapid Fire** (MoE / Speculative / FlashAttention / Distillation / 분산 훈련 / Long-context) + 5편 논문
+- **논문 25편** Figure 수준 배치 (Day 1-14)
+- **self-check.md 3단**: 기본 / 심화 / v3 ULTRA
+- **schedule.md 12-14h 블록** + Day 13/14 극한 모드
+- 최종 산출물: "**Devlog RAG Copilot ULTRA**" — Vision + Voice + Multi-agent + Fine-tuned + Guardrails + Deployed (Modal public URL)
+
+## 🔥 v2 업그레이드 (이전 단계)
 
 - **14 Day 커리큘럼 전면 재작성** — 난이도 ★ 1-2개씩 상향, 각 자료에 "한 줄 요약" 컬럼, 수치 기준 표, 실전 함정 7-10개, Stretch 과제 확장
 - **3개 치트시트 신규**: agent-patterns / production-patterns / mcp-cheatsheet
-- **self-check.md 심화 질문 추가** — 기본/심화 2단
-- **00-roadmap.md 전면 수정** — 난이도 반영
-- **notes/keywords.md 대폭 확장** — v2 Day별 추가 키워드 80+
-- 2026년 4월 기준 최신 모델 (Claude 4.7/4.6/4.5, GPT-4o+Responses API, Gemini 2.5, Qwen3)과 기법 (Anthropic Contextual Retrieval, RAPTOR, Extended Thinking, MCP 2025 spec) 반영
+- **self-check.md 심화 질문 추가**
+- 2026-04 기준 최신 모델/기법 반영

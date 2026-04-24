@@ -1,8 +1,9 @@
-# Day 9 — Evaluation (Ragas + Custom Judges + CI Gate)
+# Day 9 — Eval + Multi-Agent (ULTRA)
 
-> **난이도**: ★★★★ (원래 ★★★에서 상향)
-> **총량**: 읽기 3.5h + 실습 5.5h + 정리 1h = 10h.
-> **철학**: **"Eval 없는 RAG 개선은 미신이다"** — Jason Liu (instructor 저자). 오늘이 이 문장을 본인 데이터로 증명하는 날.
+> **난이도**: ★★★★★ (v3 상향)
+> **총량**: Ragas 8h + Multi-agent 3h + 정리 1h = **12h**.
+> **철학**: "Eval 없는 개선은 미신" + 오늘 **Multi-agent 3 프레임워크 비교**도 끼워넣음.
+> **논문**: ReAct + Reflexion + Tree of Thoughts + Judging LLM-as-a-Judge
 
 ## 🎯 오늘 끝나면
 
@@ -189,5 +190,37 @@ day08-rag-eval/
 - **Leakage 방지** — testset 질문/답이 training에 유출되면 점수 부풀림. Synthetic 생성 시 주의.
 - **Cost/latency도 metric** — 품질만 보고 고르면 돈 터짐.
 
+## 🤖 v3 추가 — Multi-Agent 프레임워크 3종 비교 (3h)
+
+Day 10의 Single-agent LangGraph **선행학습**. 단일 vs 멀티 언제?
+
+### 🔗 자료
+- [LangGraph — Multi-agent collaboration](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/multi-agent-collaboration/)
+- [LangGraph Supervisor pattern](https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/)
+- [CrewAI docs](https://docs.crewai.com/) — 역할 기반 dynamic multi-agent
+- [OpenAI Swarm (experimental)](https://github.com/openai/swarm) — handoff 패턴
+
+### 🔥 실습 — 같은 task를 3 프레임워크로
+
+**Task**: "Devlog RAG에 2026-04 최신 Ragas 소식을 추가하고 어떻게 업데이트할지 plan 생성"
+
+1. **LangGraph Supervisor** (1h): supervisor + researcher + writer + critic 4 노드
+2. **CrewAI** (1h): Researcher/Writer/Critic 역할 정의 + Process.sequential
+3. **OpenAI Swarm** (1h): agent 간 handoff — Researcher가 Writer로 명시적 넘김
+
+### 📊 비교표 (`notes/concepts.md`)
+| 프레임 | 라인 수 | 실행 시간 | 토큰 비용 | 품질 | 장점 | 단점 |
+|---|---|---|---|---|---|---|
+| LangGraph Supervisor | | | | | 명시적 state | 복잡 |
+| CrewAI | | | | | role-based 직관적 | blackbox |
+| Swarm | | | | | handoff 단순 | experimental |
+
+## 📜 논문 4편 Figure 수준 (v3 추가, 1h)
+
+- **ReAct** ([Yao 2022](https://arxiv.org/abs/2210.03629)) — Figure 1 Thought/Action/Observation
+- **Reflexion** ([Shinn 2023](https://arxiv.org/abs/2303.11366)) — Figure 1 self-reflection loop
+- **Tree of Thoughts** ([Yao 2023](https://arxiv.org/abs/2305.10601)) — Figure 1-2 tree search
+- **Judging LLM-as-a-Judge** ([Zheng 2023](https://arxiv.org/abs/2306.05685)) — Table 3 positional bias 실측 수치
+
 ## 🎁 내일(Day 10) 미리보기
-Agents + LangGraph. 단순 RAG이 아니라 "RAG + Tool + Reflection + Planner" 상태기계. 오늘 선정한 최고 RAG pipeline을 **한 노드**로 박는다.
+LangGraph single-agent 깊이 + **Voice input (Whisper)** 추가.

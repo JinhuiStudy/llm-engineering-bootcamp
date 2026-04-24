@@ -1,8 +1,8 @@
-# Day 12 — Observability + Productionization (하드코어)
+# Day 12 — Observability + Production + Deployment (ULTRA)
 
-> **난이도**: ★★★★ (원래 ★★★에서 상향)
-> **총량**: 읽기 4h + 실습 5h + 정리 1h = 10h.
-> **철학**: "관측 안 되면 프로덕션 아님." 비용/지연/에러율을 **초 단위로** 볼 수 없으면 모델/프롬프트/retriever 중 뭐가 죽었는지 모른다. 오늘이 하드코어 엔지니어링 날.
+> **난이도**: ★★★★★ (v3 상향)
+> **총량**: Observability 7h + Deployment 4h + 정리 1h = **12h**.
+> **철학**: 관측 안 되면 프로덕션 아님 + 배포 안 되면 포트폴리오 아님.
 
 ## 🎯 오늘 끝나면
 
@@ -197,5 +197,114 @@ day11-observability/
 - **Cost alert 설정** — 개발 중 agent loop 잘못되면 하루에 $수백 나갈 수 있음
 - **Prompt Labels** — `production` / `staging` 라벨 못 붙인 prompt는 절대 배포 프로덕션에 쓰지 않기
 
+## 🚀 v3 추가 — Deployment 풀스택 (4h)
+
+Modal / Fly.io / Docker multi-stage / K8s 기본 — Day 14 포트폴리오 public URL 확보.
+
+### 🔗 자료
+- [Modal docs](https://modal.com/docs) — Python decorator로 serverless 배포. 무료 tier
+- [Modal — Deploying FastAPI](https://modal.com/docs/guide/webhooks) — 30분이면 public URL
+- [Fly.io Python](https://fly.io/docs/languages-and-frameworks/python/) — Docker 기반 배포
+- [Docker — Python multi-stage builds](https://docs.docker.com/language/python/containerize/)
+- [Kubernetes basics](https://kubernetes.io/docs/concepts/overview/) — Deployment / Service / ConfigMap / Secret
+- [k3d](https://k3d.io/) — 로컬 K8s 5분 (K8s manifest 테스트용)
+
+### 🔥 실습 구조
+
+`projects/day11-observability/deploy/`:
+```
+deploy/
+├── modal_app.py            # Modal serverless (FastAPI wrap)
+├── fly/
+│   ├── Dockerfile
+│   ├── fly.toml
+│   └── README.md
+├── docker/
+│   └── Dockerfile.multistage    # builder + runtime, alpine 최소화
+├── k8s/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── configmap.yaml
+│   └── secret.yaml (.gitignore)
+└── compare.md                    # 배포 옵션 비교표
+```
+
+### 🔥 필수 구현
+
+#### 1. Modal (30m으로 첫 배포)
+```python
+# modal_app.py
+import modal
+
+app = modal.App("devlog-rag")
+image = modal.Image.debian_slim().pip_install(
+    "fastapi", "openai", "anthropic", "qdrant-client", "ai-study-shared"
+)
+
+@app.function(image=image, secrets=[modal.Secret.from_name("api-keys")])
+@modal.asgi_app()
+def fastapi_app():
+    from app.main import app  # 기존 FastAPI 앱
+    return app
+
+# 배포: modal deploy modal_app.py
+# → https://<user>-devlog-rag-fastapi-app.modal.run
+```
+
+#### 2. Fly.io
+```dockerfile
+# Dockerfile (multi-stage)
+FROM python:3.12-slim as builder
+RUN pip install uv
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen
+
+FROM python:3.12-slim
+COPY --from=builder /.venv /.venv
+COPY app /app
+CMD ["/.venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+```
+```bash
+fly launch
+fly secrets set OPENAI_API_KEY=... ANTHROPIC_API_KEY=...
+fly deploy
+# → https://devlog-rag.fly.dev
+```
+
+#### 3. K8s manifest (로컬 k3d로 테스트)
+```yaml
+# deployment.yaml (발췌)
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: devlog-rag }
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: app
+        image: devlog-rag:latest
+        envFrom: [{ secretRef: { name: api-keys } }]
+        resources:
+          limits: { memory: "512Mi", cpu: "500m" }
+```
+```bash
+k3d cluster create devlog
+kubectl apply -f k8s/
+kubectl port-forward svc/devlog-rag 8080:80
+```
+
+### 📊 배포 옵션 비교 (`deploy/compare.md`)
+| 옵션 | 시간 | 비용 | 장점 | 단점 |
+|---|---|---|---|---|
+| Modal | 30분 | 무료 tier 충분 | 가장 빠름, scale-to-zero | vendor lock-in |
+| Fly.io | 1-2h | 무료 tier 적은편 | Docker 원본, region 선택 | 첫 설정 복잡 |
+| Docker 단독 | 1h | 서버비 | 어디든 배포 | 인프라 직접 관리 |
+| K8s | 2-4h | 서버비↑ | 스케일/롤아웃 완벽 | 오버엔지니어링 가능성 |
+
+### 💡 Day 14 포트폴리오 연결
+- README에 **live demo URL** (Modal 추천 — 무료 + 빠름)
+- K8s manifest는 "알고 짤 수 있음" 증명용 (배포 안 해도 OK)
+
 ## 🎁 내일(Day 13) 미리보기
-Local LLM + RunPod. API 비용이 부담이거나 데이터 이탈 금지일 때. Ollama / vLLM / GGUF / RunPod Serverless. "언제 self-host?" 의사결정 기준.
+Local LLM + **Fine-tuning 전일** (LoRA/QLoRA/DPO with Unsloth on RunPod GPU). 14h 몰입 준비.

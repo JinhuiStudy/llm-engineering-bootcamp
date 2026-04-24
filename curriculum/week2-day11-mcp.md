@@ -1,8 +1,8 @@
-# Day 11 — MCP (Model Context Protocol) 서버 + 클라이언트
+# Day 11 — MCP + Batch API + Guardrails 풀스택 (ULTRA)
 
-> **난이도**: ★★★★ (원래 ★★★에서 상향)
-> **총량**: 읽기 3.5h + 실습 5.5h + 정리 1h = 10h.
-> **중요도**: 2024년 말 Anthropic이 발표한 오픈 표준. 2025-2026년 Cursor/Claude Desktop/Windsurf/Zed 등 주요 호스트가 채택. **"LLM용 USB-C"**.
+> **난이도**: ★★★★★ (v3 상향)
+> **총량**: MCP 7h + Batch API 2h + Guardrails 풀스택 2h + 정리 1h = **12h**.
+> **중요도**: MCP는 2024-말 Anthropic 표준. Guardrails는 프로덕션 진입점. Batch는 50% 비용 절감.
 
 ## 🎯 오늘 끝나면
 
@@ -170,5 +170,119 @@ day10-mcp-server/
 - **Sampling 남용 금지** — 사용자 quota 소비. 옵트인으로.
 - **OAuth 는 MCP 2025 spec이 표준화**. Enterprise에서는 매우 중요.
 
+## 📦 v3 추가 — Batch API 실측 (2h)
+
+50% 비용 절감. 대량 eval/classification/extraction에 필수.
+
+### 🔗 자료
+- [OpenAI Batch](https://platform.openai.com/docs/guides/batch) — `.jsonl` 업로드 → 24h SLA → 결과 download
+- [Anthropic Message Batches](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing)
+- [Gemini Batch](https://ai.google.dev/gemini-api/docs/batch-mode)
+
+### 🔥 실습
+Day 9 golden dataset 80건을 **3사 Batch API**로 돌리기:
+
+```python
+# OpenAI Batch
+import json
+from openai import OpenAI
+
+client = OpenAI()
+with open("batch_input.jsonl", "w") as f:
+    for i, q in enumerate(questions):
+        f.write(json.dumps({
+            "custom_id": f"q-{i}",
+            "method": "POST",
+            "url": "/v1/chat/completions",
+            "body": {
+                "model": "gpt-4o-mini",
+                "messages": [{"role": "user", "content": q}]
+            }
+        }) + "\n")
+
+batch_file = client.files.create(file=open("batch_input.jsonl", "rb"), purpose="batch")
+batch = client.batches.create(
+    input_file_id=batch_file.id,
+    endpoint="/v1/chat/completions",
+    completion_window="24h"
+)
+# 24h 기다리고 결과 download
+```
+
+### 📊 비용 비교표
+| Provider | 즉시 호출 (80건) | Batch (24h) | 절감 |
+|---|---|---|---|
+| OpenAI (4o-mini) | $0.80 | $0.40 | 50% |
+| Anthropic (haiku-4-5) | $0.90 | $0.45 | 50% |
+| Gemini (flash) | $0.30 | $0.15 | 50% |
+
+→ `results/batch_cost.md` 본인 숫자 표
+
+### 💡 사용 원칙
+- 실시간 UX X (24h 대기) → 오프라인 eval / 배치 분석에만
+- Day 9 Ragas eval을 batch로 돌리면 매 PR nightly CI 저렴하게
+
+## 🛡 v3 추가 — Guardrails 풀스택 3겹 (2h)
+
+Day 3의 Prompt-Guard + Day 5의 safety rails를 **프로덕션 수준**으로 통합.
+
+### 🔗 자료
+- [Guardrails AI](https://www.guardrailsai.com/docs) — validators 라이브러리 + RAIL spec
+- [NeMo Guardrails (NVIDIA)](https://github.com/NVIDIA/NeMo-Guardrails) — Colang 기반 dialogue flow
+- [LlamaFirewall (Meta)](https://github.com/facebookresearch/llamafirewall) — 통합 방어 프레임
+- [Anthropic — Strengthen Guardrails](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/overview)
+
+### 🔥 3겹 구조
+
+```
+사용자 입력
+    ↓
+[겹 1] Prompt-Guard 2 (Day 3 재사용) — INJECTION/JAILBREAK 탐지 → reject
+    ↓
+[겹 2] Guardrails AI — input validators (PII / profanity / topic)
+    ↓
+LLM 호출
+    ↓
+[겹 3] Output validators — PII mask / 출력 schema / factuality check / 유해 content
+    ↓
+사용자에게
+```
+
+### 🔥 실습 구조
+
+```
+day10-mcp-server/
+├── guardrails/
+│   ├── input_prompt_guard.py    # Day 3 Prompt-Guard 2 wrap
+│   ├── guardrails_ai_spec.py    # Guardrails AI validators
+│   ├── nemo_colang/             # NeMo Colang 규칙 1-2개
+│   └── output_filters.py        # PII mask + factuality
+└── eval/
+    └── attack_set.json           # 공격 50건 × 3겹 통과율
+```
+
+### 🔥 요구 기능
+1. Guardrails AI로 input validator:
+   ```python
+   from guardrails import Guard
+   from guardrails.hub import ToxicLanguage, DetectPII
+
+   guard = Guard().use_many(ToxicLanguage(), DetectPII())
+   result = guard.validate(user_input)
+   if not result.validation_passed:
+       raise ValueError("input rejected")
+   ```
+2. NeMo Colang 규칙 1개 (예: "회사 내부 문서 외 질문 거절")
+3. Output PII mask (regex + LLM classifier)
+4. Factuality check (Ragas faithfulness 실시간)
+
+### 📊 수치 기준
+| 메트릭 | 목표 |
+|---|---|
+| 공격 50건 → 3겹 통과율 | ≤ 5% (95%+ 차단) |
+| Benign 50건 → false reject | ≤ 3% |
+| 추가 latency | ≤ 500ms |
+| Prompt-Guard만 vs 3겹 | 차단율 +10-15% |
+
 ## 🎁 내일(Day 12) 미리보기
-Observability — Langfuse로 Day 10 agent의 모든 노드/tool call에 trace 붙이고, cost/latency dashboard 시각화. Prompt caching으로 토큰 50%+ 절감.
+Observability + Production + **Deployment (Modal/Fly.io/Docker/K8s basics)**. 오늘 MCP 서버를 Modal에 배포해서 public URL 만들기.

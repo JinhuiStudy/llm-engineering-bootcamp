@@ -1,8 +1,9 @@
-# Day 7 — 기본 RAG 파이프라인 (Week 1 피날레)
+# Day 7 — 기본 RAG + Vision/Multi-modal RAG (Week 1 피날레 ULTRA)
 
-> **난이도**: ★★★★ (원래 ★★★에서 상향)
-> **총량**: 읽기 4h + 실습 5.5h + 정리 0.5h = 10h.
-> **Week 1 총결산**: 오늘까지 지금껏 배운 것(API / Prompt / Structured / Tool / Embedding / VectorDB)을 **하나의 RAG 시스템**에 엮는다.
+> **난이도**: ★★★★★ (v3 상향)
+> **총량**: RAG 9h + Vision RAG 2h + 정리 1h = **12h**.
+> **Week 1 총결산** + Multi-modal 진입점.
+> **논문**: Lost in the Middle (Liu 2023)
 
 ## 🎯 오늘 끝나면
 
@@ -213,5 +214,48 @@ Day 1 → Day 7까지 무엇을 할 수 있게 됐는가? 자가진단 [`self-ch
 
 **Week 2는 본격 고급 + production. 난이도 급상승.** 오늘은 반드시 **0시 전에 잠**.
 
+## 🖼 v3 추가 — Vision / Multi-modal RAG (2h)
+
+### 🔗 자료
+- [OpenAI Vision](https://platform.openai.com/docs/guides/vision) — 4o Vision으로 이미지 + 텍스트 query
+- [Anthropic Vision](https://docs.anthropic.com/en/docs/build-with-claude/vision) — Claude 4.x가 Vision에 강함
+- [Gemini multimodal](https://ai.google.dev/gemini-api/docs/vision) — 2026 Vision 최강
+- [Google Multimodal RAG codelab](https://codelabs.developers.google.com/multimodal-rag-gemini) — step-by-step 90분 실습
+- [GCP multimodal RAG notebook](https://github.com/GoogleCloudPlatform/generative-ai/blob/main/gemini/use-cases/retrieval-augmented-generation/intro_multimodal_rag.ipynb) — 코드 레퍼런스
+
+### 🔥 필수 구현
+
+기존 `day06-basic-rag/`에 추가:
+```
+day06-basic-rag/
+├── vision/
+│   ├── pdf_page_images.py     # pypdf로 텍스트 뽑고 실패 시 페이지 → PNG 렌더
+│   ├── vision_rag.py          # 이미지 chunk를 4o Vision에 넘김
+│   └── chart_extraction.py    # 표/차트가 있는 페이지를 Vision으로 텍스트화
+├── samples/
+│   └── pdfs_with_charts/      # 표/차트 있는 PDF 3개 (arxiv / GPU 스펙시트 등)
+```
+
+1. PDF 페이지를 `pdf2image` or `pypdf` + `Pillow`로 PNG 렌더
+2. 텍스트 추출 실패/약함 감지 → Vision API fallback
+3. 이미지를 base64 인코딩 → Vision 모델에 "이 페이지의 정보를 텍스트로 추출" prompt
+4. 추출된 텍스트를 일반 RAG pipeline으로 인덱싱
+5. 정답셋 확장: "표 4에서 H100 메모리 대역폭?" 같은 vision-required 쿼리 5개
+
+### 📊 비교
+| 방식 | 정확도 | 비용 | latency |
+|---|---|---|---|
+| pypdf only | baseline | $0 | 빠름 |
+| pypdf + Vision fallback | +20-40% | 10x | 3-5x |
+| Vision only (모든 페이지) | +30-50% | 20x | 5-10x |
+
+**실전 권장**: pypdf 먼저 → confidence 낮거나 표/이미지 키워드 포함 시 Vision fallback
+
+## 📜 논문 — Lost in the Middle (30m)
+- [arxiv](https://arxiv.org/abs/2307.03172)
+- Figure 1: U-shape accuracy curve (context 앞/뒤는 잘 보고 중간 놓침)
+- **대응**: augment 단계에서 중요 chunk를 **앞+뒤 양끝**에 배치 (U-shape 방어)
+- 본인 코드 `app/augment.py`의 `reorder_for_lost_in_middle` 반영
+
 ## 🎁 내일(Day 8) 미리보기
-Advanced RAG — Query rewriting / HyDE / Multi-query / Hybrid(BM25+dense+RRF) / Cross-encoder rerank. 오늘 v1의 단점들을 실측해서 v2로. Week 2 난이도 ★★★★★ 가까워짐.
+Advanced RAG — Query rewriting / HyDE / Multi-query / Hybrid / Rerank + **논문 3편** (RAPTOR / ColBERT / Anthropic Contextual Retrieval).

@@ -1,7 +1,7 @@
-# 일자별 자가진단 (Self-Check v2)
+# 일자별 자가진단 (Self-Check v3 ULTRA)
 
 > 각 Day 끝에 이 질문들에 **남의 설명 없이** 답할 수 있어야 한다. 답 안 나오면 그 개념은 다음 날 오전 읽기 블록에 재학습.
-> v2에서 난이도 ↑ — 각 Day에 "심화 질문" 2-3개 추가.
+> **v3**: 각 Day에 **논문 질문** + **ULTRA 추가 주제 질문** 추가.
 
 ## Day 1 — LLM 기초
 
@@ -203,7 +203,7 @@
 - [ ] Speculative decoding의 draft/target 구조
 - [ ] 본인 데이터/쿼리에 `Qwen3-8B` vs `GPT-4o-mini` Ragas 점수 gap
 
-## Day 14 — Portfolio
+## Day 14 — Portfolio + Advanced Rapid Fire
 
 **기본**
 - [ ] 본인 아키텍처 30초 설명
@@ -213,11 +213,83 @@
 - [ ] 실무에 바로 적용할 3가지
 
 **심화 ⬆**
-- [ ] CI mini-eval threshold가 실제로 PR 차단한 사례 (만들어보기)
-- [ ] Multi-provider env switch 실제 한 번 해보기 (ollama ↔ runpod)
+- [ ] CI mini-eval threshold가 실제로 PR 차단한 사례
+- [ ] Multi-provider env switch (ollama ↔ runpod ↔ finetuned) 동작
 - [ ] Prompt caching 실제 비용 감소율 (전/후)
-- [ ] 14일 중 과대/과소평가된 자료 1개씩
-- [ ] 다음 2주 확장 계획 (extras.md 중 선택 3개)
+- [ ] 14일 중 과대/과소평가된 자료 각 1개
+- [ ] 다음 3개월 확장 계획 5개
+
+**v3 ULTRA 추가 ⬆⬆**
+- [ ] MoE (Mixtral)이 왜 추론 효율적인가 — 1문장
+- [ ] Speculative decoding의 draft/target 관계 — 다이어그램
+- [ ] FlashAttention의 "IO-aware tiling"을 HBM 관점에서 설명
+- [ ] Data/Tensor/Pipeline Parallel 각각 언제?
+- [ ] Ring Attention이 1M context를 가능케 한 원리
+- [ ] 논문 25편 중 **실무에 가장 유용했던 3편** + 이유
+- [ ] Live demo URL 접속 + response time 기록
+- [ ] Fine-tuned 모델이 base보다 이긴 쿼리 3개
+
+---
+
+## 🔥 v3 ULTRA 추가 질문들 (Day별)
+
+### Day 1 — 논문
+- [ ] Attention Is All You Need의 **3가지 핵심 기여** — 본인 언어로
+- [ ] Chinchilla가 Scaling Law에 기여한 것 (data-compute 최적 비율)
+- [ ] Karpathy tokenizer 영상에서 배운 "왜 BPE가 이 모양인가" 1문장
+
+### Day 3 — Security/OWASP
+- [ ] OWASP LLM01 Prompt Injection — 본인 agent의 대응
+- [ ] Prompt-Guard 2의 정확도 한계 (본인 실측)
+- [ ] Canary token + Sandwich + Classifier 3겹 중 가장 강력한 것
+
+### Day 7 — Vision RAG
+- [ ] pypdf-only vs pypdf+Vision fallback의 trade-off (품질/비용/지연)
+- [ ] Vision이 가장 필요한 문서 유형 3가지
+- [ ] Lost in the Middle의 U-shape — 본인 chunk 배치 전략
+
+### Day 8 — RAG 논문
+- [ ] RAPTOR의 트리 vs 단순 chunking 차이점 + 언제 유리
+- [ ] ColBERT late interaction의 저장 비용 trade-off
+- [ ] Anthropic Contextual Retrieval 49% 개선 재현 여부
+
+### Day 9 — Multi-agent
+- [ ] LangGraph Supervisor / CrewAI / Swarm 3 프레임 **선택 기준**
+- [ ] Multi-agent가 단일보다 나빴던 케이스
+- [ ] ReAct Thought/Action/Obs와 Reflexion self-critique 차이
+
+### Day 10 — Voice
+- [ ] Whisper WER (Word Error Rate) 본인 환경 실측
+- [ ] Realtime API의 TTFT 체감
+- [ ] Voice agent의 production 함정 3가지
+
+### Day 11 — Guardrails + Batch
+- [ ] Guardrails 3겹 중 **False Reject** 가장 많이 내는 것
+- [ ] Batch API 50% 할인 전제 — 언제 쓰지 말아야 하나?
+- [ ] NeMo Colang vs Guardrails AI vs LlamaFirewall 선택
+
+### Day 12 — Deploy
+- [ ] Modal vs Fly.io vs K8s 선택 기준 3개
+- [ ] Docker multi-stage builder와 runtime 분리 이유
+- [ ] K8s Deployment의 `replicas` vs `HorizontalPodAutoscaler`
+
+### Day 13 — Fine-tuning
+- [ ] LoRA의 rank r=16 vs r=64 trade-off
+- [ ] QLoRA의 NF4 vs INT4 차이
+- [ ] DPO beta 파라미터 의미
+- [ ] **RAG vs Fine-tune 선택 기준** — 본인 판단 근거
+
+### Day 14 — Advanced
+- 위 "v3 ULTRA 추가" 섹션 참조
+
+---
+
+## 🎯 통과 기준 (v3 ULTRA)
+
+- **기본**: 각 Day 3개 이상 답 → 재학습 (다음날 오전 1h)
+- **심화**: 3개 이상 못 답 → 주말 2h 복습
+- **v3 ULTRA**: 2개 이상 못 답 → 해당 주제 `concepts.md` 재정리
+- **모든 Day 기본 + 심화 + ULTRA 답 가능** = 14일 ULTRA 만점 통과
 
 ---
 

@@ -1,8 +1,8 @@
-# Day 10 — Agents + LangGraph (State Machine 패러다임)
+# Day 10 — LangGraph Agent + Voice Input (ULTRA)
 
-> **난이도**: ★★★★★ (원래 ★★★★에서 상향)
-> **총량**: 읽기 4h + 실습 5h + 정리 1h = 10h.
-> **관점 전환**: 지금까지는 "LLM 호출 몇 개 파이프". 오늘부터는 **"그래프 + 상태 + 루프 + 중단점"** — soft state machine 엔지니어링.
+> **난이도**: ★★★★★
+> **총량**: LangGraph 9h + Voice 2h + 정리 1h = **12h**.
+> **관점 전환**: "LLM 호출 몇 개 파이프" → **"그래프 + 상태 + 루프 + 중단점 + 음성 입력"**
 
 ## 🎯 오늘 끝나면
 
@@ -205,5 +205,37 @@ START → classifier
 - **Retry on error는 state에 남겨라** — 재시작 후 무한 retry 방지.
 - **Token budget enforcement** — 상태에 total_tokens 누적, limit 도달시 graceful exit.
 
+## 🎤 v3 추가 — Voice Input (Whisper + Realtime) 2h
+
+### 🔗 자료
+- [OpenAI Whisper API](https://platform.openai.com/docs/guides/speech-to-text) — `audio.transcriptions.create`. 한국어 잘 됨
+- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) — 스트리밍 음성 대화
+- [Gemini Live API](https://ai.google.dev/gemini-api/docs/live) — 2026 실시간 음성 (양방향)
+
+### 🔥 Mini 구현 (오늘 agent에 붙이기)
+
+```
+day09-langgraph-agent/
+├── voice/
+│   ├── whisper_input.py       # 마이크 or WAV → Whisper → text
+│   ├── agent_voice_cli.py     # 녹음 → RAG agent → TTS 응답 (선택)
+│   └── realtime_demo.py       # (Stretch) OpenAI Realtime API 스트리밍
+```
+
+1. `sounddevice` + `scipy`로 마이크 15초 녹음
+2. Whisper API (또는 로컬 `openai-whisper`)로 텍스트화
+3. 텍스트를 Day 10 agent의 input으로 전달
+4. agent 응답을 TTS (OpenAI `audio.speech.create` / ElevenLabs)
+5. **Stretch**: Realtime API로 양방향 음성 대화 (Day 14 portfolio 후보)
+
+### 📊 수치
+- Whisper 한국어 WER (Word Error Rate): ~5-10% (깨끗한 환경)
+- Realtime API TTFT (음성 첫 응답): ~1s
+- 15초 녹음 → 텍스트 변환: ~2-3s
+
+### 💡 Day 14 portfolio 연결
+- Portfolio UI에 "🎤 Voice ask" 버튼
+- 전체 RAG agent를 음성으로 호출 가능한 데모 → gif에 포함
+
 ## 🎁 내일(Day 11) 미리보기
-MCP(Model Context Protocol) — tool use의 **표준화**. 오늘 만든 agent의 tool들을 MCP server로 노출하고 Claude Desktop에서 호출.
+MCP + **Batch API + Guardrails 풀스택**. Day 3의 Prompt-Guard를 프로덕션 급으로 격상 (NeMo/LlamaFirewall 추가).

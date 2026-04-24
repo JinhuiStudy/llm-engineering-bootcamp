@@ -200,3 +200,61 @@
 - Ollama base_url trick, OpenAI-compatible endpoint
 - RunPod Pod / Serverless, worker-vllm template, cold start
 - MLX (Apple Silicon native)
+
+## v3 ULTRA 추가 키워드
+
+### Day 1-3 (v3)
+- Scaling Law, Chinchilla optimal (20 tokens/parameter)
+- Attention head count, d_model, d_ff
+- OWASP LLM Top 10 v2.0 (2025)
+- Prompt-Guard 2 86M (INJECTION/JAILBREAK/BENIGN)
+- Lakera Playbook attack catalog
+
+### Day 7 (v3)
+- Multi-modal RAG, Vision fallback
+- PDF → PNG 렌더 (pdf2image), Vision API chunk
+- Confidence-based fallback triggering
+
+### Day 9 (v3)
+- Supervisor pattern, Hierarchical / Swarm / Network agent topologies
+- CrewAI Process (sequential/hierarchical)
+- OpenAI Swarm handoff
+- Cohen's Kappa (inter-rater agreement)
+- Elo rating, pairwise comparison
+
+### Day 10 (v3)
+- Whisper WER, Realtime API
+- Voice agent full-duplex
+- Gemini Live API
+
+### Day 11 (v3)
+- Batch API 50% 할인 (OpenAI/Anthropic/Gemini)
+- 24h SLA, custom_id
+- Guardrails AI validators (RAIL spec)
+- NeMo Colang (dialogue flow)
+- LlamaFirewall (Meta 통합 방어)
+
+### Day 12 (v3)
+- Modal serverless (decorator 기반)
+- Fly.io (Docker + region)
+- Docker multi-stage (builder + runtime)
+- K8s: Deployment/Service/ConfigMap/Secret/HPA
+- k3d (로컬 K8s)
+
+### Day 13 (v3)
+- LoRA (Hu 2021): rank decomposition, ΔW = BA
+- QLoRA (Dettmers 2023): 4-bit NF4, Double Quantization, Paged Optimizers
+- DPO (Rafailov 2023): preference pairs, beta, PPO 대체
+- Unsloth 2-5x 가속
+- TRL SFTTrainer / DPOTrainer
+- Chat template alignment
+- Adapter merge / GGUF export
+
+### Day 14 (v3 Advanced)
+- Mixture of Experts (MoE): sparse expert routing, Mixtral 8x7B
+- Speculative Decoding: draft + target, Medusa
+- FlashAttention: IO-aware tiling, HBM read/write 급감
+- Distilling Step-by-Step: Rationale distillation
+- Data / Tensor / Pipeline Parallel: DDP / FSDP / Megatron / GPipe
+- Ring Attention: ring passing for 1M+ context
+- KV cache compression, InfiniAttention

@@ -1,8 +1,9 @@
-# Day 8 — 고급 RAG (Query Transform / Hybrid / Rerank / RAPTOR 맛보기)
+# Day 8 — 고급 RAG + 논문 3편 (ULTRA)
 
-> **난이도**: ★★★★★ (원래 ★★★★에서 상향 — Week 2 진짜 시작)
-> **총량**: 읽기 4h + 실습 5.5h + 정리 0.5h = 10h.
-> **철학**: 어제 v1은 "그럭저럭 동작". 오늘 v2는 **실측 숫자가 실제로 개선되는가**를 매 기법마다 검증한다. **Eval 없이 추가하는 기법은 미신.**
+> **난이도**: ★★★★★ (v3 유지, 시간 +2h)
+> **총량**: 읽기 4h + 실습 6h + 논문 3편 1.5h + 정리 0.5h = **12h**.
+> **철학**: "Eval 없는 개선은 미신" + 논문으로 기법 뿌리 이해
+> **논문**: RAPTOR + ColBERTv2 + Anthropic Contextual Retrieval (blog)
 
 ## 🎯 오늘 끝나면
 
@@ -173,5 +174,25 @@ Day 7 v1 대비 Day 8 v2가 넘어야 할 선:
 - Parent Document / Small-to-Big
 - Corrective RAG (CRAG), Self-RAG (adaptive retrieval)
 
+## 📜 v3 추가 — 논문 3편 Figure 수준 (1.5h)
+
+오늘 구현한 기법들의 **원조** 읽기.
+
+### 1. RAPTOR (Sarthi 2024)
+- [arxiv](https://arxiv.org/abs/2401.18059) · Figure 1 (hierarchy tree)
+- **요지**: chunks → GMM 클러스터링 → 요약 → 상위 레벨 chunks → 재귀. 긴 문서 질문에 강함
+- **Claude 요약**: "RAPTOR의 3 핵심 기여를 bullets로"
+- **본인 정리 3줄**
+
+### 2. ColBERTv2 (Santhanam 2022)
+- [arxiv](https://arxiv.org/abs/2112.01488) · Figure 1 (late interaction)
+- **요지**: 쿼리-문서를 token 레벨로 interaction. dense보다 정확, 저장 10배
+- **실무 관점**: BGE-M3의 `colbert_vecs` 출력이 이것
+
+### 3. Anthropic Contextual Retrieval (2024-09)
+- [blog](https://www.anthropic.com/news/contextual-retrieval)
+- 논문 아님 but 중요. 49% retrieval 실패 감소 실측
+- 오늘 `v2_contextual.py`가 이것 그대로
+
 ## 🎁 내일(Day 9) 미리보기
-오늘 만든 5-6개 pipeline에 대해 Ragas의 **faithfulness / answer_relevancy / context_precision / context_recall** 수치로 승부. "eval 없는 개선은 미신"을 몸으로 실감하는 날.
+Ragas **4 metric으로 오늘 6 pipeline 승부** + **Multi-agent 3 프레임 비교 (LangGraph Supervisor/CrewAI/Swarm)** + **ReAct/Reflexion/ToT 논문 3편**.

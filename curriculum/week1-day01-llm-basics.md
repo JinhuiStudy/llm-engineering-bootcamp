@@ -1,8 +1,9 @@
-# Day 1 — LLM 기초 / Transformer 감각 장착 (하드코어)
+# Day 1 — LLM 기초 / Transformer / 논문 2편 (ULTRA)
 
-> **난이도**: ★★ (원래 ★에서 상향) — "아는 척"이 아니라 "설명할 수 있음" 기준.
-> **총량**: 읽기 5h + 실습 4.5h + 노트 정리 0.5h = 10h.
+> **난이도**: ★★★ (v3에서 재상향)
+> **총량**: 읽기 4h + 실습 5h + 논문 2편 2h + 정리 1h = **12h**.
 > **전제**: Python 3.11+, `uv`/`pip` 능숙, 터미널 익숙.
+> **논문**: Attention Is All You Need + Chinchilla (Figure 수준)
 
 ## 🎯 오늘 끝나면 할 수 있어야 하는 것
 
@@ -137,9 +138,24 @@ Ollama로 `qwen2.5:3b` 띄우고 (Day 13 내용 당겨쓰기):
 
 **Tier A (설명 가능해야 함)**: positional encoding(absolute/RoPE), layer normalization, residual connection, feed-forward, multi-head attention, causal mask, autoregressive, BPE/SentencePiece, logprob, perplexity, n-gram baseline, RNN/LSTM 한계, Flash Attention(이름만), sliding window attention(이름만)
 
-## 🔗 Further Reading (Week 2 이후)
+## 📜 논문 2편 Figure 레벨 (v3 추가, 2h)
 
-- [Chinchilla paper](https://arxiv.org/abs/2203.15556) — 데이터/파라미터 스케일링 법칙. "왜 모델이 작아지는 추세인가" 답.
-- [Lost in the Middle (Liu 2023)](https://arxiv.org/abs/2307.03172) — 긴 컨텍스트의 중간이 무시됨.
-- [The Illustrated Word2vec](https://jalammar.github.io/illustrated-word2vec/) — embedding 감각 보강 (Day 6 예습).
-- [Sebastian Raschka — Understanding LLMs](https://magazine.sebastianraschka.com/p/understanding-large-language-models) — 2024-2026 LLM 진화 타임라인.
+### 1. Attention Is All You Need (Vaswani 2017)
+- [arxiv](https://arxiv.org/abs/1706.03762) · [PDF](https://arxiv.org/pdf/1706.03762)
+- **읽을 것**: Abstract / Figure 1 (전체 구조) / Figure 2 (attention heads) / Section 3.2 (Attention) / Table 1 (결과)
+- **Claude 요약 프롬프트**: "Summarize the 3 key contributions of the Transformer paper and why each mattered. Bullet points only, 5 total."
+- **본인 정리 3줄** → `notes/concepts.md`에 "Transformer 핵심" 섹션
+
+### 2. Chinchilla (Hoffmann 2022)
+- [arxiv](https://arxiv.org/abs/2203.15556)
+- **읽을 것**: Abstract / Figure 1 (scaling law) / Table 3 (70B vs 280B 비교) / Section 4 결과
+- **핵심**: "모델 파라미터 수 × 훈련 데이터 토큰 수의 최적 비율 = ~20토큰/파라미터"
+- **왜 중요**: 이후 LLaMA/Qwen 등이 data-heavy로 방향 전환한 이유
+- **본인 정리 3줄**
+
+## 🔗 Further Reading (여력 있을 때)
+
+- [Lost in the Middle (Liu 2023)](https://arxiv.org/abs/2307.03172) — 긴 컨텍스트 중간 무시
+- [The Illustrated Word2vec](https://jalammar.github.io/illustrated-word2vec/) — embedding 감각 (Day 6 예습)
+- [Sebastian Raschka — Understanding LLMs](https://magazine.sebastianraschka.com/p/understanding-large-language-models)
+- [Karpathy — nanoGPT](https://github.com/karpathy/nanoGPT) — ~300줄 GPT 구현

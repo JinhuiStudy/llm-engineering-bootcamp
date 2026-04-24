@@ -1,8 +1,9 @@
-# Day 3 — Prompt Engineering (초하드코어 날)
+# Day 3 — Prompt Engineering + OWASP + Prompt-Guard (ULTRA)
 
-> **난이도**: ★★★★ (원래 ★★에서 대폭 상향 — 오늘이 Week 1의 진짜 분수령)
-> **총량**: 읽기 5h + 실습 4h + 정리 1h = 10h.
-> **전제**: Day 2 3-provider CLI가 돌아감, 3사 SDK 사용법 숙지.
+> **난이도**: ★★★★★ (v3 상향)
+> **총량**: 읽기 5h + 실습 5h + OWASP/Prompt-Guard 추가 2h = **12h**.
+> **전제**: Day 2 3-provider CLI 동작.
+> **논문**: CoT (Wei 2022) + Self-Consistency (Wang 2022)
 
 > 💀 **Warning**: 프롬프트 엔지니어링은 "감"이 아니라 **관찰 + 측정**이다. 오늘 하는 모든 실험은 결과를 `results/`에 저장하고 수치/길이/형식 충족 여부를 표로 기록해라.
 
@@ -182,5 +183,67 @@ day02-prompt-lab/
 - Few-shot 예시에 **PII 금지** — 사용자 로그에 그대로 남을 수 있음.
 - 긴 system prompt는 **prompt caching** 필수 (Day 12).
 
+## 🛡 v3 추가 섹션 — OWASP LLM Top 10 + Prompt-Guard 로컬 실행 (2h)
+
+### OWASP LLM Top 10 v2.0 (2025)
+- 🔗 [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- 🧠 **각 항목에 대해 "내 프로젝트에 해당하는가" 체크**:
+
+| # | 항목 | 내 프로젝트 risk |
+|---|---|---|
+| LLM01 | Prompt Injection | ⬆️ 매우 높음 (RAG context 유입) |
+| LLM02 | Sensitive Info Disclosure | ⬆️ 높음 (tool logs, system prompt 누출) |
+| LLM03 | Supply Chain | ⬇️ 중간 (HF 모델 origin) |
+| LLM04 | Data & Model Poisoning | ⬇️ 낮음 (이번 스터디는 무관) |
+| LLM05 | Improper Output Handling | ⬆️ 높음 (HTML/SQL 이스케이프) |
+| LLM06 | Excessive Agency | ⬆️ 매우 높음 (Day 5 agent sandbox) |
+| LLM07 | System Prompt Leakage | ⬆️ 높음 |
+| LLM08 | Vector & Embedding Weakness | ⬇️ 중간 |
+| LLM09 | Misinformation | ⬆️ 중간 (RAG citation 강제로 대응) |
+| LLM10 | Unbounded Consumption | ⬆️ 높음 (agent token budget) |
+
+→ **본인 Day 14 포트폴리오 체크리스트**로 `notes/decisions.md`에 리스크 레지스터 작성
+
+### Llama Prompt-Guard 2 로컬 실행
+- 🔗 [meta-llama/Llama-Prompt-Guard-2-86M](https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M)
+- 🧠 86M 파라미터 classifier. `INJECTION` / `JAILBREAK` / `BENIGN` 3 class
+- **실습**:
+  ```python
+  from transformers import AutoTokenizer, AutoModelForSequenceClassification
+  import torch
+  tok = AutoTokenizer.from_pretrained("meta-llama/Llama-Prompt-Guard-2-86M")
+  m = AutoModelForSequenceClassification.from_pretrained("meta-llama/Llama-Prompt-Guard-2-86M")
+  
+  def is_injection(text: str) -> bool:
+      inputs = tok(text, return_tensors="pt", truncation=True)
+      with torch.no_grad():
+          logits = m(**inputs).logits
+      label = m.config.id2label[logits.argmax().item()]
+      return label != "BENIGN"
+  
+  # Day 3 injection_lab의 attack 샘플로 테스트
+  # 기대: 90%+ 탐지
+  ```
+- **결과 기록** `injection_lab/prompt_guard_results.md`:
+  - 공격 샘플 × 탐지 성공률
+  - Benign 텍스트 × 오탐률
+- Day 11에 GuardRails와 통합 준비
+
+### Lakera Playbook 훑기 (30m)
+- 🔗 [Prompt Injection Playbook (Lakera)](https://www.lakera.ai/blog/guide-to-prompt-injection)
+- 실무 관점 공격 카탈로그. Day 3 injection_lab에서 빠진 공격 유형 보완
+
+## 📜 논문 섹션 (v3 추가, 1h)
+
+### CoT (Wei 2022)
+- [arxiv](https://arxiv.org/abs/2201.11903)
+- Figure 1만. "step by step" 넣었더니 GSM8K 5% → 50% 뛴 장면
+- **Claude 요약**: "3 key findings of the CoT paper in bullets"
+
+### Self-Consistency (Wang 2022)
+- [arxiv](https://arxiv.org/abs/2203.11171)
+- Figure 1. CoT를 N회 sampling 후 다수결 → 추가 10%
+- 오늘 `12-self-consistency.txt` 패턴이 이 논문 그대로
+
 ## 🎁 내일(Day 4) 미리보기
-Structured Output + Pydantic. 오늘 만든 JSON 강제 프롬프트를 Pydantic schema로 "컴파일 타임" 보장까지 올리기. `response_format={"type": "json_schema", "strict": true}` 실전.
+Structured Output + Pydantic. 오늘 만든 JSON 강제 프롬프트를 Pydantic schema로 "컴파일 타임" 보장까지 올리기.

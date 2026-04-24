@@ -52,6 +52,9 @@
 | RAG 설계/개선 | [`cheatsheets/rag-patterns.md`](cheatsheets/rag-patterns.md) |
 | Eval 점수 해석 | [`cheatsheets/eval-metrics.md`](cheatsheets/eval-metrics.md) |
 | 3사 API 문법 | [`cheatsheets/api-compare.md`](cheatsheets/api-compare.md) |
+| **Agent 패턴** | [`cheatsheets/agent-patterns.md`](cheatsheets/agent-patterns.md) (신규 v2) |
+| **Production 패턴** | [`cheatsheets/production-patterns.md`](cheatsheets/production-patterns.md) (신규 v2) |
+| **MCP 서버** | [`cheatsheets/mcp-cheatsheet.md`](cheatsheets/mcp-cheatsheet.md) (신규 v2) |
 | 용어 모름 | [`notes/keywords.md`](notes/keywords.md) |
 | 일일 로그 | [`notes/daily-log.md`](notes/daily-log.md) |
 | 시간 블록 계획 | [`curriculum/schedule.md`](curriculum/schedule.md) |
@@ -85,3 +88,12 @@ make status            # 현재 상태 요약
 3. **숫자로 말한다.** Eval 없는 개선은 미신.
 4. **실패를 로그한다.** 안 된 이유, 뭘 바꿨더니 됐는지 매일 기록.
 5. **완벽 대신 완료.** 내 코드가 완벽하지 않아도 14일 안에 돌아가는 게 먼저.
+
+## 🔥 v2 업그레이드 요약
+
+- **14 Day 커리큘럼 전면 재작성** — 난이도 ★ 1-2개씩 상향, 각 자료에 "한 줄 요약" 컬럼, 수치 기준 표, 실전 함정 7-10개, Stretch 과제 확장
+- **3개 치트시트 신규**: agent-patterns / production-patterns / mcp-cheatsheet
+- **self-check.md 심화 질문 추가** — 기본/심화 2단
+- **00-roadmap.md 전면 수정** — 난이도 반영
+- **notes/keywords.md 대폭 확장** — v2 Day별 추가 키워드 80+
+- 2026년 4월 기준 최신 모델 (Claude 4.7/4.6/4.5, GPT-4o+Responses API, Gemini 2.5, Qwen3)과 기법 (Anthropic Contextual Retrieval, RAPTOR, Extended Thinking, MCP 2025 spec) 반영

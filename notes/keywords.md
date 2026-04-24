@@ -125,3 +125,78 @@
 - **Dense ↔ Sparse vector** — 의미 기반 vs 단어 기반.
 - **RAG ↔ Fine-tuning** — 외부 지식 주입 vs 모델 가중치 변경. RAG가 먼저.
 - **Bi-encoder ↔ Cross-encoder** — 빠름/덜 정확 vs 느림/정확. 2단계 조합이 표준.
+- **Workflow ↔ Agent (Anthropic)** — 고정 경로 vs 동적. 기본은 workflow.
+- **Chat Completions ↔ Responses API (OpenAI)** — 레거시 vs 신규. 신규 코드는 Responses.
+- **JSON mode ↔ Structured Outputs (strict)** — JSON 형식만 보장 vs 스키마까지 보장.
+- **stdio ↔ Streamable HTTP (MCP)** — 로컬 subprocess vs 원격/멀티클라이언트.
+- **Implicit (OpenAI) ↔ Explicit (Anthropic/Gemini) prompt caching** — 자동 vs 수동 `cache_control`.
+- **GGUF ↔ AWQ/GPTQ** — CPU/범용 양자화 vs GPU 중심 weight-only quantization.
+- **Pod ↔ Serverless (RunPod)** — persistent VM vs event-driven scale-to-zero.
+- **TTFT ↔ E2E latency** — 첫 토큰 지연 vs 완료까지 지연. 스트리밍에선 TTFT가 UX.
+
+## v2 추가 키워드 (난이도 상향 반영)
+
+### Day 1-3
+- Chars-per-Token (CPT, 토큰 효율), Lost in the Middle, logprob entropy, nucleus sampling
+- Self-Consistency (N-sampling + 다수결), Chain-of-Density, Step-back prompting
+- Prompt injection 4 vectors (direct/indirect/payload splitting/encoded), sandwich defense, canary token, Prompt-Guard
+- Anthropic Interactive Tutorial 9 chapters
+
+### Day 4-5
+- Pydantic v2 (`model_validate_json`, `RootModel`, `discriminator`)
+- JSON Schema Draft 2020-12, `$ref`, `$defs`, `additionalProperties: false`
+- Instructor `Partial[T]` / `Iterable[T]` / `Maybe[T]`, Outlines grammar-constrained decoding
+- Extended thinking + tool use (Claude 4.x)
+- Built-in tools (OpenAI web_search / file_search / code_interpreter)
+- asteval (safe expression parser), Docker/firejail sandbox
+- Recursion limit, token budget enforcement
+
+### Day 6-8
+- Matryoshka Representation Learning (MRL)
+- Task-specific embeddings (retrieval_query / retrieval_document / STS)
+- E5 prefix convention (`query:` / `passage:`)
+- BGE-M3 (dense + sparse + colbert 3-output)
+- HNSW `m` / `ef_construct` / `ef`, on-disk mode
+- Scalar / Binary / Product Quantization, recall-latency trade
+- Anthropic Contextual Retrieval (49% 개선)
+- RAPTOR (recursive abstraction tree), ColBERT late interaction
+- Corrective RAG (CRAG), Self-RAG (adaptive retrieval)
+- RRF formula `1/(k+rank)`, k=60
+
+### Day 9
+- Noise Sensitivity, Answer Correctness, reference-free vs reference-based
+- Pairwise comparison (Elo), inter-rater agreement (Kappa)
+- CI gate, threshold, Pareto frontier (cost vs quality)
+- Golden dataset categories (factual / synthesis / unanswerable / adversarial)
+
+### Day 10
+- LangGraph `StateGraph`, `conditional_edges`, `add_messages` reducer
+- Checkpointing (SqliteSaver / PostgresSaver), thread_id
+- `interrupt_before` / `interrupt_after` (HITL)
+- Streaming modes (values / updates / messages / debug)
+- Agent vs Workflow (Anthropic blog)
+- Pydantic AI, smolagents, CrewAI
+
+### Day 11
+- MCP primitives: Tools / Resources / Prompts / Sampling
+- JSON-RPC 2.0, `initialize` handshake, capability negotiation
+- stdio / Streamable HTTP / SSE transports
+- Host / Client / Server 역할 분리
+- Roots (sandbox), consent prompts
+- FastMCP, MCP Inspector
+
+### Day 12
+- OpenTelemetry GenAI semantic conventions
+- Anthropic `cache_creation_input_tokens` / `cache_read_input_tokens`
+- OpenAI `usage.prompt_tokens_details.cached_tokens`
+- Gemini `client.caches.create()` (32k+ 최소 prefix)
+- tenacity `wait_random_exponential`, `retry_if_exception_type`
+- aiolimiter, pybreaker 3상태
+- Batch API (50% 할인, 24h SLA)
+
+### Day 13
+- PagedAttention, continuous batching, speculative decoding
+- AWQ / GPTQ (4-bit GPU), GGUF Q-levels
+- Ollama base_url trick, OpenAI-compatible endpoint
+- RunPod Pod / Serverless, worker-vllm template, cold start
+- MLX (Apple Silicon native)

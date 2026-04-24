@@ -62,6 +62,7 @@
 | 뒤처졌을 때 | [`curriculum/recovery-playbook.md`](curriculum/recovery-playbook.md) |
 | **Troubleshooting / FAQ** | [`curriculum/troubleshooting.md`](curriculum/troubleshooting.md) (신규 v2) |
 | **Day 0 프리컬** | [`curriculum/day00-prep.md`](curriculum/day00-prep.md) (신규 v2) |
+| **⭐ Pre-Digested 문서** | [`resources/pre-digested.md`](resources/pre-digested.md) (신규 v3.1 — 공식 문서 직접 fetch해서 뽑은 복붙 코드 + 2026 최신) |
 | 큰 결정 기록 | [`notes/decisions.md`](notes/decisions.md) |
 
 ## 🔧 자주 쓰는 명령
@@ -91,7 +92,17 @@ make status            # 현재 상태 요약
 4. **실패를 로그한다.** 안 된 이유, 뭘 바꿨더니 됐는지 매일 기록.
 5. **완벽 대신 완료.** 내 코드가 완벽하지 않아도 14일 안에 돌아가는 게 먼저.
 
-## 🚀 v3 ULTRA 업그레이드 요약 (최신)
+## 🔥 v3.1 Pre-Digested 추가 (최신)
+
+- **NEW: [`resources/pre-digested.md`](resources/pre-digested.md)** — 14 Day의 공식 문서를 **직접 WebFetch**로 열어 소화한 문서:
+  - 2026-04 도메인 이전 (Anthropic → platform.claude.com, Cookbook → developers.openai.com, LangGraph → docs.langchain.com)
+  - **Claude 4.7/4.6/4.5 모델명 확정** + 새 tool types (web_search_20260209 등)
+  - **Gemini 3-flash-preview** 등장 (2.5 업그레이드)
+  - **복붙 가능 코드**: Qdrant quickstart / LangGraph StateGraph / Langfuse @observe / Anthropic Prompt Caching 완전판 (cache_control syntax + 4096 토큰 최소값 per model) / Contextual Retrieval 공식 numbers + prompt template / OpenAI Structured Output parse / Modal FastAPI / Unsloth LoRA pattern
+  - **논문 25편 배치** + Claude 요약 프롬프트 템플릿
+- Day 0 프리컬에서 바로 이 문서로 안내
+
+## 🚀 v3 ULTRA 업그레이드 요약
 
 - **하루 10h → 12-14h**, 총 170h / 14일. 모든 extras 주제를 2주 안에 통합
 - **새 주제 7영역 추가**:

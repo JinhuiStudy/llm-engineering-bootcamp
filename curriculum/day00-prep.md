@@ -183,6 +183,18 @@ Google Calendar / Apple Calendar에 다음 블록 반복 설정:
 - [`curriculum/recovery-playbook.md`](recovery-playbook.md) 뒤처질 때 대응
 - [`notes/keywords.md`](../notes/keywords.md) Tier S 용어 15개
 
+## ⭐ Pre-Digested 문서 숙지 (30분) — v3.1 신규
+
+**[`resources/pre-digested.md`](../resources/pre-digested.md)** 를 30분 들여 훑어라. 여기에 있는 것:
+
+- **2026-04 최신 변경**: Anthropic 도메인 이전, 신 모델명(Opus 4.7/Sonnet 4.6/Haiku 4.5), Gemini 3, LangGraph 도메인 이전
+- **Day 1-14 핵심 코드 복붙 가능 패턴** — 공식 문서 직접 fetch해서 검증한 코드
+- **Qdrant quickstart / LangGraph StateGraph / Langfuse @observe / Anthropic Prompt Caching / Contextual Retrieval 공식 수치 / Modal 배포 / Unsloth LoRA**
+- **논문 25편 Day별 배치 + 요약 프롬프트**
+- **공식 문서 직링크 테이블** (2026-04 확인됨)
+
+👉 **이 문서 하나 훑으면 Day 1-14 내내 링크 열 필요 50% 감소**.
+
 ## 예산 요약
 
 | 항목 | 예상 |

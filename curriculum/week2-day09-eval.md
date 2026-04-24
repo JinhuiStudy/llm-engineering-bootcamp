@@ -99,7 +99,7 @@ day08-rag-eval/
    ```
 5. **Failure analysis** — 틀린 케이스 10+건 공통 패턴 추출 ("질문이 숫자를 요구하는데 chunk에 범위만 있음" 등). `failure_cases.md`에 기록.
 6. **CI gate**:
-   - `gate.py`: mini-eval (20건 샘플) faithfulness < 0.75면 exit 1
+   - `gate.py`: mini-eval (20건 샘플) **faithfulness < 0.85**면 exit 1 (v3 상향)
    - `github_action.yml`: PR마다 실행
 7. **Cost vs quality Pareto** — 각 pipeline을 (faithfulness, cost)로 플롯 → Pareto frontier 선정
 

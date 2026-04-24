@@ -113,11 +113,13 @@ for i in {1..50}; do python chat.py --provider anthropic "hi" & done
 모델                      in $/1M    out $/1M   비고
 gpt-4o-mini              0.15       0.60       cheap workhorse
 gpt-4o                   2.50       10.00      quality
-claude-haiku-4-5         1.00       5.00       Anthropic workhorse
+claude-haiku-4-5         0.80       4.00       Anthropic workhorse (2026-04 실측 반영, shared/tokens.py)
 claude-sonnet-4-6        3.00       15.00      quality flagship
-gemini-2.5-flash         0.10       0.40       cheapest
+gemini-2.5-flash         0.075      0.30       cheapest (official, free tier 외)
 gemini-2.5-pro           1.25       10.00      ...
 ```
+
+> ⚠️ 실제 가격은 provider dashboard가 진짜. 위는 2026-04 **학습용 추정** — `shared/ai_study/tokens.py`의 `PRICING` dict와 동기화. 호출 전 실비용 추정은 `make pricing`.
 
 동일 프롬프트 1000번 호출 시 예상 비용을 계산하고, "실험은 flash/mini/haiku, production은 sonnet/4o/pro" 룰을 본인 노트에 기록.
 

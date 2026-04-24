@@ -98,7 +98,7 @@ uv add ragas datasets pandas
 - [ ] `gate.py`:
   ```python
   import sys
-  thresholds = {"faithfulness": 0.8, "context_precision": 0.75}
+  thresholds = {"faithfulness": 0.85, "context_precision": 0.80, "response_relevancy": 0.85}
   results = load_leaderboard()
   for pipeline, scores in results.items():
       for metric, threshold in thresholds.items():

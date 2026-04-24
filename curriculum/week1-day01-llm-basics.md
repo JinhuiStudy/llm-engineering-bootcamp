@@ -98,7 +98,7 @@ OpenAI `logprobs=True, top_logprobs=5` 옵션으로 "I'm feeling" 뒤에 오는 
 
 ### Task 4 — KV 캐시 체감 (1h, Stretch)
 
-Ollama로 `qwen2.5:3b` 띄우고 (Day 13 내용 당겨쓰기):
+Ollama로 `qwen3:8b` (또는 가볍게 `qwen3:1.7b`) 띄우고 (Day 13 내용 당겨쓰기):
 1. 짧은 prompt(100 tokens) + 짧은 generation(50 tokens) × 10회 — 총 레이턴시 기록
 2. 긴 prompt(4000 tokens) + 짧은 generation(50 tokens) × 10회 — TTFT만 길어지고 tok/s는 유사함을 관찰
 3. **Prefill vs Decode 단계 분리**: TTFT = prefill 시간, 나머지 = decode 시간. 엔지니어링 최적화가 어디 걸리는지 체감.

@@ -1,0 +1,63 @@
+name: 질문 (Question)
+description: 커리큘럼/실습 중 막힌 부분, 개념이 헷갈리는 부분을 질문
+title: "[Q] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        커리큘럼을 따라가다 막힌 점을 질문해주세요.
+        먼저 `notes/keywords.md`, `cheatsheets/`, `resources/links-classified.md`에 답이 있는지 확인해주시면 좋습니다.
+
+  - type: dropdown
+    id: day
+    attributes:
+      label: 어느 Day에서?
+      options:
+        - "Day 0 (Setup)"
+        - "Day 1 - LLM 기초"
+        - "Day 2 - API"
+        - "Day 3 - Prompt Engineering"
+        - "Day 4 - Structured Output"
+        - "Day 5 - Function Calling / Tool Use"
+        - "Day 6 - Embedding + Vector DB"
+        - "Day 7 - 기본 RAG"
+        - "Day 8 - 고급 RAG"
+        - "Day 9 - Eval"
+        - "Day 10 - Agents / LangGraph"
+        - "Day 11 - MCP"
+        - "Day 12 - Observability / Production"
+        - "Day 13 - Local LLM / RunPod"
+        - "Day 14 - 포트폴리오"
+        - "Extras (14+)"
+        - "기타"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: 질문
+      description: 무엇이 헷갈리는지. 구체적일수록 답하기 쉽습니다.
+      placeholder: |
+        예) Day 8의 HyDE 예제에서 가설 답변이 틀리면 오히려 검색이 나빠진다고 하는데,
+            언제 HyDE를 켜고 끌지 판단 기준이 있나요?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: 이미 시도한 것
+      description: 공식 문서/Claude/구글링으로 시도한 게 있으면.
+      placeholder: |
+        - LangChain RAG From Scratch 해당 Part 다시 봄
+        - Claude에게 요약 시킴
+        - ...
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 실행 환경 (선택)
+      description: 실습 중 에러라면 OS / Python / 패키지 버전 등.
+      render: shell

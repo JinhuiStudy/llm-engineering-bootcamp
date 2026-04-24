@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 일반 토론
+    url: https://github.com/JinhuiStudy/llm-engineering-bootcamp/discussions
+    about: 커리큘럼 진행 후기나 학습 경험 공유는 Discussions에서.

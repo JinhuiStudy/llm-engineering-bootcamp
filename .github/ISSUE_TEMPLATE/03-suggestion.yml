@@ -1,0 +1,57 @@
+name: 제안 (Suggestion)
+description: 커리큘럼 개선, 새 자료 제보, 주제 추가/삭제 등
+title: "[Suggestion] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        커리큘럼을 더 좋게 만들 아이디어를 환영합니다.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 어떤 종류의 제안?
+      options:
+        - 새 학습 자료 제보 (링크 추가)
+        - 실습 프로젝트 확장 / 변형 아이디어
+        - 커리큘럼 주제 추가
+        - 커리큘럼 주제 삭제 / 압축
+        - 새로운 치트시트 / 노트
+        - Starter code 개선
+        - 문서 개선 / 번역
+        - 도구/워크플로우 개선 (Makefile, CI 등)
+        - 기타
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 문제 / 동기
+      description: 왜 이 제안이 필요한가? 어떤 학습자에게 도움이 되나?
+      placeholder: |
+        예) Day 10 LangGraph 실습 후 Pydantic AI로 동일 기능을 구현하는 비교 실습이 있으면,
+            프레임워크 선택 감각을 빠르게 잡을 수 있을 것 같습니다.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 제안 내용
+      description: 구체적으로 뭘 추가/변경하고 싶은지
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 고려한 대안
+      description: 다른 접근은 왜 덜 좋은지 (선택)
+
+  - type: textarea
+    id: links
+    attributes:
+      label: 참고 자료 / 링크
+      description: 관련 공식 문서/튜토리얼/논문 (있으면)

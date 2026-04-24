@@ -1,0 +1,73 @@
+name: 오류 / 버그 (Bug)
+description: 커리큘럼 코드/설정/문서의 실제 오류 제보
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        코드가 동작하지 않거나, 문서 내용이 틀렸거나, 링크가 깨진 경우.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 어떤 종류의 오류?
+      options:
+        - 실습 코드 동작 안 함
+        - 설치 / setup 스크립트 실패
+        - Docker compose 문제
+        - 문서 내용 오류 / 오타
+        - 링크 깨짐 (resources/)
+        - 커리큘럼 순서/분량 문제
+        - 기타
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: 파일 경로
+      description: 어디서 발생? (예 projects/day06-basic-rag/rag.py, curriculum/week2-day09-eval.md)
+      placeholder: "projects/... 또는 curriculum/..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대 동작
+      description: 커리큘럼 지침대로면 어떻게 되어야 하나
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 동작 / 에러 메시지
+      description: 로그/스택 트레이스 그대로 붙여넣기. 비밀키 있으면 마스킹.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: 재현 방법
+      description: 1-2-3 단계로.
+      placeholder: |
+        1. make qdrant-up
+        2. cd projects/day06-basic-rag
+        3. uv run python rag.py "테스트 질문"
+        → 위 에러
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 환경
+      description: OS, Python 버전, 어느 커밋 기준인지 등.
+      render: shell
+      placeholder: |
+        macOS 14.5
+        Python 3.11.9
+        uv 0.5.0
+        commit: abc1234

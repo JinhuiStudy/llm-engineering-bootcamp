@@ -1,5 +1,12 @@
 # LLM Engineering Bootcamp — 2주 하드코어
 
+[![License: MIT](https://img.shields.io/github/license/JinhuiStudy/llm-engineering-bootcamp?color=blue)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/JinhuiStudy/llm-engineering-bootcamp?style=social)](https://github.com/JinhuiStudy/llm-engineering-bootcamp/stargazers)
+[![Issues](https://img.shields.io/github/issues/JinhuiStudy/llm-engineering-bootcamp)](https://github.com/JinhuiStudy/llm-engineering-bootcamp/issues)
+[![Made with Python](https://img.shields.io/badge/Python-3.11%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/)
+[![uv](https://img.shields.io/badge/uv-managed-261230?logo=python&logoColor=white)](https://docs.astral.sh/uv/)
+[![Docker](https://img.shields.io/badge/Docker-Qdrant%20%2B%20Langfuse-2496ed?logo=docker&logoColor=white)](infra/)
+
 8년차 소프트웨어 개발자가 LLM 앱 개발자로 전환하기 위한 **14일 속성 커리큘럼**.
 하루 10시간+ 기준 총 ~140시간.
 

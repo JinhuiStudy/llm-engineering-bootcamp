@@ -15,15 +15,19 @@
 ---
 
 ## Day 0 — 준비 (시작 전날)
-- [ ] OpenAI API 키 발급 + $10 크레딧
-- [ ] Anthropic API 키 발급 + $10 크레딧
+- [ ] OpenAI API 키 발급 + $5 크레딧 충전 (Hard limit $20 설정)
+- [ ] Anthropic API 키 발급 + $5 크레딧 충전
 - [ ] Google AI Studio 무료 키
+- [ ] Voyage AI free key (선택, Day 6)
+- [ ] Tavily free key (선택, Day 5)
 - [ ] Python 3.11+ + uv 설치
 - [ ] Docker Desktop 기동 확인
-- [ ] GitHub repo 생성: `llm-bootcamp-portfolio`
-- [ ] Claude Desktop 설치
-- [ ] RunPod 계정 생성 (결제 카드 준비는 Day 13 직전)
-- [ ] curriculum/00-roadmap.md 완독
+- [ ] GitHub repo 생성: `devlog-rag-copilot` (Public 권장)
+- [ ] Claude Desktop + Claude Code 설치
+- [ ] Ollama 설치 (Day 13)
+- [ ] RunPod 계정 생성 + $10 충전 (Day 13 GPU fine-tuning $15-25 예산)
+- [ ] curriculum/day00-prep.md 완독 + 멘탈 세팅
+- [ ] resources/pre-digested.md 훑기 (v3.1 신규 — 복붙 코드 한눈에)
 
 ## Day 1 — YYYY-MM-DD
 - 오늘 한 것:

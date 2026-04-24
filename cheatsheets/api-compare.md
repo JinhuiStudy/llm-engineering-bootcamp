@@ -17,7 +17,7 @@
 | Batch API | ✅ | ✅ (message batches) | ✅ |
 | Vision | ✅ | ✅ | ✅ (최강) |
 | Audio in/out | ✅ (realtime/audio-preview) | 부분 | ✅ (Live API) |
-| 최대 context | 400k (GPT 계열) | 200k (standard), 1M (beta) | 1M+ (표준) |
+| 최대 context | 400k (GPT 계열) | **1M (GA, Claude 4.x)** | 1M+ (표준) |
 
 ## 호출 뼈대 비교 (동일 "hello"를 3사로)
 
@@ -132,18 +132,20 @@ r = client.models.generate_content(
 # r.parsed → Person
 ```
 
-## 비용 / 성능 감각 (표준 모델 기준, 2026년 초)
+## 비용 / 성능 감각 (2026-04 기준)
 
 | 티어 | OpenAI | Anthropic | Gemini |
 |---|---|---|---|
-| Flagship | GPT-4o, o-series | Claude Opus 4.x | Gemini Pro |
-| Workhorse | GPT-4o-mini | Claude Sonnet 4.x | Gemini Flash |
-| Tiny | GPT-4o-nano? | Claude Haiku 4.x | Gemini Flash-Lite |
+| Flagship | gpt-4o, o1 | **claude-opus-4-7** (adaptive thinking) | gemini-2.5-pro |
+| Workhorse | gpt-4o-mini | **claude-sonnet-4-6** | gemini-2.5-flash / **gemini-3-flash-preview** |
+| Tiny/Cheap | gpt-4o-mini | **claude-haiku-4-5** | gemini-2.5-flash-lite |
+
+**⚠️ Deprecated (사용 금지)**: claude-sonnet-3.7 (4.x로 이전), gemini-1.5-*, text-davinci-003
 
 **엄지 룰**:
-- 빠른 실험 / 비용: Haiku / 4o-mini / Flash
-- 품질 중요: Sonnet / 4o / Pro
-- 최상급 reasoning: Opus / o-series / Pro with thinking
+- 빠른 실험 / 비용: Haiku 4.5 / 4o-mini / Flash
+- 품질 중요: Sonnet 4.6 / 4o / Pro
+- 최상급 reasoning: Opus 4.7 (adaptive thinking) / o1 / Pro with thinking
 
 ## Rate Limit 대응 (공통)
 

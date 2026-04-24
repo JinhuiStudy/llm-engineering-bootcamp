@@ -10,9 +10,15 @@ import anthropic
 
 from ai_study.config import settings
 
-# 1000+ tokens 정도의 긴 system prompt (캐시 가능 최소 크기 넘겨야 함)
+# 긴 system prompt — Haiku 4.5 / Opus 4.x 최소 캐시 크기는 4096 tokens.
+# 약 1200 단어 반복으로 4500+ 토큰 확보 (한국어 기준 여유 있게).
+# (pre-digested.md의 "Prompt Caching 최소 토큰" 표 참고)
 LONG_SYSTEM = (
-    "당신은 엔지니어링 멘토다. 아래 가이드라인을 엄격히 지킨다.\n" + "- 규칙 " * 400
+    "당신은 엔지니어링 멘토다. 아래 가이드라인을 엄격히 지킨다.\n"
+    + "- 규칙: 답변은 간결하고 근거 기반으로. 외부 지식 남용 금지. "
+      "Context 없으면 '모르겠다'고 답한다. 코드 예시는 최소화, 설명 우선. "
+      "언어는 한국어. 단답 지양, 2-3 문장. "
+    * 1200
 )
 
 
@@ -40,6 +46,9 @@ def call(user: str) -> dict:
 
 
 if __name__ == "__main__":
+    from ai_study.tokens import count_tokens
+    print(f"system prompt 추정 토큰: {count_tokens(LONG_SYSTEM):,} (목표: 4096+)")
     print("첫 호출:", call("RAG를 한 줄로 설명해."))
     print("두번째  :", call("Agent의 핵심을 한 줄로."))
     # 두번째에서 cache_read_input_tokens 가 큰 값이어야 cache hit
+    # 최소 토큰 미달이면 silent하게 cache_creation/cache_read 둘 다 0.

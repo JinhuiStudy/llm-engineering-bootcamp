@@ -1,8 +1,9 @@
-# Day 2 — 3대 Provider API 실전 (하드코어)
+# Day 2 — 3대 Provider API 실전 (ULTRA)
 
-> **난이도**: ★★★ (원래 ★★에서 상향)
-> **총량**: 읽기 3.5h + 실습 5.5h + 정리 1h = 10h.
-> **목표**: "OpenAI / Anthropic / Gemini 공식 문서를 보지 않고도 각 SDK로 chat / stream / multi-turn / system prompt / token usage까지 칠 수 있는 수준".
+> **난이도**: ★★★ (v3)
+> **총량**: 읽기 4h + 실습 6h + Prompt Caching 선행 1h + 정리 1h = **12h**.
+> **목표**: "OpenAI / Anthropic / Gemini 공식 문서를 보지 않고도 각 SDK로 chat / stream / multi-turn / system prompt / token usage까지 칠 수 있는 수준" + **Prompt Caching 선행 경험** (Day 12에서 풀스펙).
+> **논문**: RAG (Lewis 2020) Figure 1 + Abstract
 
 ## 🎯 오늘 끝나면
 

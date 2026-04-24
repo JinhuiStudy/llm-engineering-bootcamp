@@ -1,8 +1,9 @@
-# Day 6 — Embedding + Vector DB (하드코어)
+# Day 6 — Embedding + Vector DB (ULTRA)
 
-> **난이도**: ★★★ (원래 ★★에서 상향)
-> **총량**: 읽기 3.5h + 실습 5.5h + 정리 1h = 10h.
-> **이정표**: "embedding이 의미를 벡터 공간에 매핑" → "Qdrant CRUD + HNSW 파라미터 튠 + quantization 트레이드오프 체감 + 한국어 임베딩 모델 선정"까지.
+> **난이도**: ★★★★ (v3)
+> **총량**: 읽기 4h + 실습 7h + 논문 0.5h + 정리 0.5h = **12h**.
+> **이정표**: "embedding이 의미를 벡터 공간에 매핑" → "Qdrant CRUD + HNSW 파라미터 튠 + quantization 트레이드오프 체감 + 한국어 임베딩 모델 선정".
+> **v3 추가**: ColBERT + BGE-M3 deep + 논문 2편 (PagedAttention — vLLM 원리 선행 / Matryoshka)
 
 ## 🎯 오늘 끝나면
 

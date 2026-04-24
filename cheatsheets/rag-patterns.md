@@ -30,14 +30,31 @@ Load → Split → Embed → Store → Retrieve → Augment → Generate
 - 약점: 동의어, paraphrase
 
 ### 3. Hybrid (RRF)
-- Dense + Sparse 결합. Reciprocal Rank Fusion로 병합.
+- Dense + Sparse 결합. Reciprocal Rank Fusion로 병합 (`score = Σ 1/(k+rank)`, k=60).
 - 거의 항상 단일보다 나음
 
 ### 4. Reranking
 - Top-50 → Cross-encoder → Top-5
 - `cross-encoder/ms-marco-MiniLM-L-6-v2` (무료, 작음)
-- Cohere Rerank API (유료, 강함)
+- Cohere Rerank API (`rerank-multilingual-v3.0` 한국어 우수)
 - 비용/지연 대비 정확도 ⬆⬆
+
+### 5. Contextual Retrieval (Anthropic 2024-09) ⭐ v3 추가
+- 각 chunk에 **"이 chunk가 전체 문서에서 어느 부분인지"** 1문장 prepend → 임베딩
+- **실측 (Anthropic 공식)**:
+  - Contextual Embeddings 단독: retrieval 실패 5.7% → 3.7% (**35% 감소**)
+  - + BM25: 5.7% → 2.9% (**49% 감소**)
+  - + Reranker: 5.7% → 1.9% (**67% 감소**)
+- 비용: prompt caching 적용 시 **1M 토큰당 ~$1.02** 일회성
+- 공식 prompt template (그대로 복붙):
+  ```
+  <document>{{WHOLE_DOCUMENT}}</document>
+  Here is the chunk we want to situate within the whole document
+  <chunk>{{CHUNK_CONTENT}}</chunk>
+  Please give a short succinct context to situate this chunk within the overall document
+  for the purposes of improving search retrieval of the chunk. Answer only with the
+  succinct context and nothing else.
+  ```
 
 ## Query Transformation
 
@@ -68,14 +85,16 @@ Load → Split → Embed → Store → Retrieve → Augment → Generate
 ### 고급 (confidence + citations)
 - Pydantic 모델로 `{answer, citations: list[Citation], confidence: float}` 강제
 
-## 평가 (Ragas 기준)
+## 평가 (Ragas v0.2+ 기준)
 
-| 지표 | 의미 | 어떻게 개선 |
+| 지표 (v0.2 클래스) | 의미 | 어떻게 개선 |
 |---|---|---|
 | **Faithfulness** | 답이 context에 있는가 | 프롬프트 강화, "모르면 모른다고" |
-| **Answer relevancy** | 답이 질문에 답하는가 | 프롬프트, CoT |
-| **Context precision** | 가져온 chunk 중 쓸만한 비율 | rerank, hybrid |
-| **Context recall** | 정답에 필요한 걸 다 가져왔나 | chunk size, top-k, query expansion |
+| **ResponseRelevancy** | 답이 질문에 답하는가 | 프롬프트, CoT |
+| **LLMContextPrecisionWithReference** | 가져온 chunk 중 쓸만한 비율 | rerank, hybrid, **Contextual Retrieval** |
+| **LLMContextRecall** | 정답에 필요한 걸 다 가져왔나 | chunk size, top-k, query expansion |
+
+> ⚠️ v0.1의 소문자 이름 (`faithfulness`, `answer_relevancy`, ...)은 deprecated. 신 코드는 클래스 사용.
 
 ## 성능 향상 순서 (cost 대비 효과)
 

@@ -1,8 +1,9 @@
-# Day 5 — Function Calling / Tool Use (하드코어)
+# Day 5 — Function Calling / Tool Use (ULTRA)
 
-> **난이도**: ★★★★ (원래 ★★★에서 상향)
-> **총량**: 읽기 4h + 실습 5h + 정리 1h = 10h.
-> **이정표**: "Tool 정의를 JSON Schema로 쓰고, LLM이 뭘 호출하든 loop가 안 터지고, parallel tool call도 순차 fallback 없이 다루고, 악성 tool call도 방어되는 agent 껍데기"를 만드는 게 오늘의 목표.
+> **난이도**: ★★★★ (v3)
+> **총량**: 읽기 4h + 실습 7h + 정리 1h = **12h**.
+> **이정표**: "Tool 정의를 JSON Schema로 쓰고, LLM이 뭘 호출하든 loop가 안 터지고, parallel tool call도 순차 fallback 없이 다루고, 악성 tool call도 방어되는 agent 껍데기".
+> **v3 추가**: 2026 신규 server tools (`web_search_20260209`, `code_execution_20250825`) + **strict tool use** (schema 100% 보장)
 
 ## 🎯 오늘 끝나면
 

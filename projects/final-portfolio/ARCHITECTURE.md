@@ -77,30 +77,45 @@ class FinalAnswer(BaseModel):
     tokens_used: int
 ```
 
-## 환경 프로필
+## 환경 프로필 (2026-04 / v3)
 
 | 프로필 | LLM | Embedding | Vector DB | Observability |
 |---|---|---|---|---|
-| dev | gpt-4o-mini | OpenAI | Qdrant local | Langfuse local |
-| cheap | Ollama qwen2.5 | local MiniLM | Qdrant local | Langfuse local |
-| prod | Claude Sonnet | OpenAI text-embedding-3-large | Qdrant self-host | Langfuse self-host |
-| runpod | RunPod vLLM | OpenAI | Qdrant self-host | Langfuse self-host |
+| dev | gpt-4o-mini | OpenAI text-embedding-3-small | Qdrant local | Langfuse local |
+| cheap | Ollama qwen3:8b | local multilingual-e5-large | Qdrant local | Langfuse local |
+| prod | claude-sonnet-4-6 | OpenAI text-embedding-3-large | Qdrant self-host | Langfuse self-host |
+| runpod | RunPod vLLM Qwen3-8B | OpenAI | Qdrant self-host | Langfuse self-host |
+| finetuned | Day 13 LoRA adapter (RunPod) | OpenAI | Qdrant self-host | Langfuse self-host |
 
-`.env`의 `PROFILE=dev|cheap|prod|runpod` 로 스위치.
+`.env`의 `PROFILE=dev|cheap|prod|runpod|finetuned` 로 스위치.
 
-## Eval CI Gate
+## Eval CI Gate (v3 상향)
 
 ```
 pytest tests/ + python eval/ci_gate.py
 ```
-- 정답셋 30+ 통과
-- faithfulness ≥ 0.75
-- answer_relevancy ≥ 0.70
-- context_recall ≥ 0.70
-실패 시 PR block.
+- 정답셋 **50+** 통과 (Day 9 확장)
+- **faithfulness ≥ 0.85** (v2 0.75 → v3 상향)
+- **answer_relevancy ≥ 0.85**
+- **context_precision ≥ 0.80**
+- **context_recall ≥ 0.80**
+- **unanswerable 거절률 ≥ 0.85**
 
-## 안 만드는 것 (Scope 밖)
+PR: sample 20건 mini-eval, main nightly full. threshold 미달 시 PR block.
+
+## v3 통합 기능 (Day 14 Mega Portfolio)
+
+- 🖼 **Vision RAG** (Day 7) — 표/차트 PDF를 Vision API fallback
+- 🎤 **Voice input** (Day 10) — Whisper → agent
+- 🤖 **Multi-agent** (Day 9) — Supervisor + Researcher + Writer + Critic
+- 🎯 **Fine-tuned LoRA** (Day 13) — Qwen3-8B 본인 도메인
+- 🛡 **Guardrails 3겹** (Day 3 + Day 11) — Prompt-Guard + Guardrails AI + NeMo
+- 🌐 **Deployed on Modal** (Day 12) — public URL
+- 📜 **Contextual Retrieval** (Day 8) — Anthropic 2024-09 기법 (49% 개선)
+
+## 안 만드는 것 (Scope 밖, v3)
+
 - 인증/멀티 유저 (토이 앱이니 생략)
-- Fine-tuning (extras 트랙)
 - GUI로 문서 업로드 (CLI로만)
 - 비용 최적화 자동화 (수동 측정만)
+- 대규모 분산 훈련 (Day 14 개념만 — Tensor/Pipeline/Data parallel)

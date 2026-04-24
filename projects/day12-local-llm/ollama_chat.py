@@ -1,6 +1,7 @@
 """Day 13: Ollama를 OpenAI SDK로 호출.
 
-전제: `ollama pull qwen2.5:7b` 후 `ollama serve` (자동 실행됨).
+전제: `ollama pull qwen3:8b` 후 `ollama serve` (자동 실행됨).
+.env의 OLLAMA_MODEL 로 모델 교체 가능 (기본 qwen3:8b).
 """
 
 from __future__ import annotations

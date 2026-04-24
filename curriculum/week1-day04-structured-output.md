@@ -1,8 +1,9 @@
-# Day 4 — Structured Output + Pydantic (하드코어)
+# Day 4 — Structured Output + Pydantic (ULTRA)
 
-> **난이도**: ★★★ (원래 ★★에서 상향)
-> **총량**: 읽기 4h + 실습 5h + 정리 1h = 10h.
-> **철학**: 프로덕션 LLM 앱의 80%는 **"구조화된 입출력을 100% 보장"**으로 결정된다. 오늘이 그 기초.
+> **난이도**: ★★★★ (v3)
+> **총량**: 읽기 4h + 실습 7h + 정리 1h = **12h**.
+> **철학**: 프로덕션 LLM 앱의 80%는 **"구조화된 입출력을 100% 보장"**으로 결정된다.
+> **v3 추가**: Anthropic **strict tool use** (2026 신규) + OpenAI `beta.chat.completions.parse` 완전판
 
 ## 🎯 오늘 끝나면
 

@@ -48,7 +48,7 @@ class Settings:
     qdrant_url: str = os.getenv("QDRANT_URL", "http://localhost:6333")
     qdrant_api_key: str = os.getenv("QDRANT_API_KEY", "")
     ollama_base_url: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
-    ollama_model: str = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
+    ollama_model: str = os.getenv("OLLAMA_MODEL", "qwen3:8b")
 
     # observability
     langfuse_host: str = os.getenv("LANGFUSE_HOST", "http://localhost:3000")
@@ -60,6 +60,7 @@ class Settings:
     runpod_endpoint_id: str = os.getenv("RUNPOD_ENDPOINT_ID", "")
     tavily_api_key: str = os.getenv("TAVILY_API_KEY", "")
     cohere_api_key: str = os.getenv("COHERE_API_KEY", "")
+    voyage_api_key: str = os.getenv("VOYAGE_API_KEY", "")
 
     # behavior
     log_level: str = os.getenv("LOG_LEVEL", "INFO")

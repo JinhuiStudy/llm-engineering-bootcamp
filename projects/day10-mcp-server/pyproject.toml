@@ -1,15 +1,18 @@
 [project]
-name = "day01-chatbot-cli"
+name = "day10-mcp-server"
 version = "0.1.0"
-description = "Day 1-2 — 3-Provider CLI Chatbot + Provider 추상화"
+description = "Day 11 — MCP Server (Tools/Resources/Prompts/Sampling)"
 requires-python = ">=3.11"
 
 dependencies = [
     "ai-study-shared",
+    "mcp>=1.1",
+    "fastmcp>=2.1",
+    "asteval>=1.0.5",
 ]
 
 [project.scripts]
-chat = "chat:main"
+ai-study-mcp = "server:main"
 
 [tool.uv.sources]
 ai-study-shared = { path = "../../shared", editable = true }

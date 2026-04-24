@@ -1,0 +1,33 @@
+[project]
+name = "day07-advanced-rag"
+version = "0.1.0"
+description = "Day 8 — 고급 RAG v2 (6 pipeline 모듈화 + Hybrid + Rerank + Contextual)"
+requires-python = ">=3.11"
+
+dependencies = [
+    "ai-study-shared",
+    "qdrant-client>=1.12",
+    "sentence-transformers>=3.3",
+    "rank-bm25>=0.2.2",
+    "cohere>=5.13",              # rerank-multilingual-v3.0
+    "FlagEmbedding>=1.3",        # BGE-M3 dense+sparse+colbert
+    "langchain>=0.3.10",
+    "langchain-openai>=0.2.11",
+    "pypdf>=5.1",
+]
+
+[project.optional-dependencies]
+stretch = [
+    "umap-learn>=0.5",           # RAPTOR 클러스터링 시각화
+    "scikit-learn>=1.5",
+]
+
+[tool.uv.sources]
+ai-study-shared = { path = "../../shared", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

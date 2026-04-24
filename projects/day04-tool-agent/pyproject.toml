@@ -1,15 +1,16 @@
 [project]
-name = "day01-chatbot-cli"
+name = "day04-tool-agent"
 version = "0.1.0"
-description = "Day 1-2 — 3-Provider CLI Chatbot + Provider 추상화"
+description = "Day 5 — 방어적 멀티툴 에이전트 (3사 tool_use + safety rails)"
 requires-python = ">=3.11"
 
 dependencies = [
     "ai-study-shared",
+    "httpx>=0.27",
+    "asteval>=1.0.5",          # safe expression parser
+    "tavily-python>=0.5",
+    "duckduckgo-search>=6.3",  # tavily 대체
 ]
-
-[project.scripts]
-chat = "chat:main"
 
 [tool.uv.sources]
 ai-study-shared = { path = "../../shared", editable = true }

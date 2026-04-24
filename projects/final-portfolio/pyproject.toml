@@ -1,11 +1,76 @@
 [project]
 name = "devlog-rag-copilot"
 version = "0.1.0"
-description = "14일 부트캠프 최종 포트폴리오"
+description = "Day 14 Final Portfolio — Devlog RAG Copilot (Production-grade)"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+
 dependencies = [
     "ai-study-shared",
+
+    # Web server
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sse-starlette>=2.1",
+
+    # UI
+    "streamlit>=1.40",
+
+    # Core stack
+    "langgraph>=0.2.60",
+    "langgraph-checkpoint-sqlite>=2.0",
+    "langchain>=0.3.10",
+    "langchain-openai>=0.2.11",
+    "langchain-anthropic>=0.3",
+    "langchain-qdrant>=0.2",
+    "qdrant-client>=1.12",
+    "langfuse>=2.55",
+    "ragas>=0.2.10",
+
+    # Tools / utils
+    "tenacity>=9.0",
+    "aiolimiter>=1.2",
+    "pybreaker>=1.2",
+    "asteval>=1.0.5",
+    "tavily-python>=0.5",
+
+    # MCP
+    "mcp>=1.1",
+    "fastmcp>=2.1",
+
+    # Reranker
+    "sentence-transformers>=3.3",
+    "rank-bm25>=0.2.2",
+
+    # Parsing
+    "pypdf>=5.1",
+    "pdfplumber>=0.11",
 ]
+
+[project.optional-dependencies]
+gpu = ["vllm>=0.6"]
+deploy = [
+    "gunicorn>=23.0",
+    "python-multipart>=0.0.12",
+]
+
+[project.scripts]
+devlog = "app.main:main"
 
 [tool.uv.sources]
 ai-study-shared = { path = "../../shared", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM"]
+ignore = ["E501"]

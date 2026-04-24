@@ -1,0 +1,30 @@
+[project]
+name = "day03-structured-extractor"
+version = "0.1.0"
+description = "Day 4 — 다중 도메인 정보 추출기 (Pydantic + 3사 strict)"
+requires-python = ">=3.11"
+
+dependencies = [
+    "ai-study-shared",
+    "rapidfuzz>=3.10",
+    "pypdf>=5.1",
+    "pdfplumber>=0.11",
+    "pydantic[email]>=2.10",
+    "instructor>=1.7",
+]
+
+[project.optional-dependencies]
+stretch = [
+    "unstructured>=0.16",   # 스캔 PDF
+    "outlines>=0.1",        # grammar-constrained decoding (local)
+]
+
+[tool.uv.sources]
+ai-study-shared = { path = "../../shared", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

@@ -1,15 +1,20 @@
 [project]
-name = "day01-chatbot-cli"
+name = "day02-prompt-lab"
 version = "0.1.0"
-description = "Day 1-2 — 3-Provider CLI Chatbot + Provider 추상화"
+description = "Day 3 — Prompt Lab (12 패턴 × 3 태스크 + Injection Lab)"
 requires-python = ">=3.11"
 
 dependencies = [
     "ai-study-shared",
+    "pandas>=2.2",
+    "rank-bm25>=0.2.2",
 ]
 
-[project.scripts]
-chat = "chat:main"
+[project.optional-dependencies]
+stretch = [
+    "llmlingua>=0.2",       # prompt compression
+    "guidance>=0.1",
+]
 
 [tool.uv.sources]
 ai-study-shared = { path = "../../shared", editable = true }

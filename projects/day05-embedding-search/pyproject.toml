@@ -1,15 +1,17 @@
 [project]
-name = "day01-chatbot-cli"
+name = "day05-embedding-search"
 version = "0.1.0"
-description = "Day 1-2 — 3-Provider CLI Chatbot + Provider 추상화"
+description = "Day 6 — Semantic Search + 5 임베딩 모델 × Qdrant 튜닝"
 requires-python = ">=3.11"
 
 dependencies = [
     "ai-study-shared",
+    "qdrant-client>=1.12",
+    "sentence-transformers>=3.3",
+    "rank-bm25>=0.2.2",
+    "voyageai>=0.3",
+    "FlagEmbedding>=1.3",      # BGE-M3 (dense+sparse+colbert)
 ]
-
-[project.scripts]
-chat = "chat:main"
 
 [tool.uv.sources]
 ai-study-shared = { path = "../../shared", editable = true }
